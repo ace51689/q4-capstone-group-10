@@ -8,6 +8,7 @@ authors = ["Michael Vitollo <ace51689@gmail.com>"]
 python = "^3.9"
 Django = "^3.2.8"
 django-environ = "^0.7.0"
+django-mptt = "^0.13.4"
 
 [tool.poetry.dev-dependencies]
 
