@@ -46,4 +46,20 @@ class Migration(migrations.Migration):
             field=models.PositiveIntegerField(db_index=True, editable=False),
             preserve_default=False,
         ),
+        migrations.AlterField(
+            model_name='post',
+            name='body',
+            field=models.TextField(blank=True, null=True),
+        ),
+        migrations.AlterField(
+            model_name='post',
+            name='subreddit',
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
+                                    to='subreddits.subreddit'),
+        ),
+        migrations.AlterField(
+            model_name='post',
+            name='title',
+            field=models.CharField(blank=True, max_length=100, null=True),
+        ),
     ]
