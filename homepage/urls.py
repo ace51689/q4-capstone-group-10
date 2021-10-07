@@ -15,13 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.urls.conf import include
+from homepage import views 
 
-from subreddits import views as subreddit_views
 
 urlpatterns = [
-    path('', include('homepage.urls')),
-    path('', include('users.urls')),
-    path('subreddit/<int:id>/', subreddit_views.subreddit_view, name='subreddit'),
-    path('admin/', admin.site.urls),
+    path('', views.homepage, name='homepage'),
 ]

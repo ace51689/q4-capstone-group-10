@@ -43,7 +43,7 @@ class LoginView(View):
                 login(request, user)
                 return redirect(reverse("signup"))
     form = LoginForm()
-    return render(request, "login_form.html", {"form": form})      
+    return render(request, "login.html", {"form": form})      
     
   def get(self,request):
     template_name = 'login.html'
