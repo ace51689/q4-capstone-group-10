@@ -15,14 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls.conf import include
 
-from users import views as user_views
 from subreddits import views as subreddit_views
 
 urlpatterns = [
-    path('logout/', user_views.logout_view, name='logout'),
-    path('login/', user_views.CreateLoginview.as_view(), name='login'),
-    path('signup/', user_views.CreateUserView.as_view(), name='signup'),
+    path('', include('users.urls')),
     path('subreddit/<int:id>/', subreddit_views.subreddit_view, name='subreddit'),
     path('admin/', admin.site.urls),
 ]
