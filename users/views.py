@@ -24,7 +24,7 @@ class CreateUserView(View):
         username=data.get('username'),
         password=data.get('password1')
         )
-      return redirect(reverse("signup"))
+      return redirect(reverse('login'))
 
     return render(request, self.template_name, { "form": self.form })
 
@@ -36,11 +36,12 @@ class LoginView(View):
         if form.is_valid():
             data = form.cleaned_data
             user = authenticate(
-                request, username=data.get["username"], password=data.get["password"]
+                request, username=data.get("username"),
+                password=data.get("password")
             )
             if user:
                 login(request, user)
-                return redirect(reverse.GET.get("next", "/"))
+                return redirect(reverse("signup"))
     form = LoginForm()
     return render(request, "login_form.html", {"form": form})      
     

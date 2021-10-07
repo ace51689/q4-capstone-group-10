@@ -19,7 +19,7 @@ from users import views
 
 
 urlpatterns = [
-    path('logout', views.logout_view, name='logout'),
+    path('logout/', views.logout_view, name='logout'),
     path('login/', views.LoginView.as_view(), name='login'),
-    path("signup/", views.CreateUserView.as_view(), name="signup"),
+    path("signup/", views.CreateUserView.as_view(), name='signup'),
 ]

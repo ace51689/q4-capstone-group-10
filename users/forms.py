@@ -8,5 +8,5 @@ class CreateUserForm(UserCreationForm):
     fields = ('username', 'password1', 'password2',)
 
 class LoginForm(forms.Form):
-  username           = forms.CharField(max_length=50)
-  password           = forms.CharField(widget=forms.PasswordInput)
+  username = forms.CharField(max_length=50)
+  password = forms.CharField(widget=forms.PasswordInput)
