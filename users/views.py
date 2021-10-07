@@ -41,7 +41,7 @@ class LoginView(View):
             )
             if user:
                 login(request, user)
-                return redirect(reverse("signup"))
+                return redirect(reverse("homepage"))
     form = LoginForm()
     return render(request, "login.html", {"form": form})      
     
