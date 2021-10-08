@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from users import views 
+from subreddits import views 
 
 
 urlpatterns = [
-    path('logout/', views.logout_view, name='logout'),
-    path('login/', views.LoginView.as_view(), name='login'),
-    path("signup/", views.CreateUserView.as_view(), name='signup'),
+    path('subreddit/<int:id>/', views.subreddit_view, name='subreddit'),
+    path('subreddit/create/', views.CreateSubredditView.as_view(), name='create-subreddit'),
+    path('subreddit/<int:id>/edit/', views.edit_subreddit_view, name='edit-subreddit'),
+    path('subreddit/<int:id>/join/', views.join_subreddit, name='join-subreddit'),
+    path('subreddit/<int:id>/leave/', views.leave_subreddit, name='leave-subreddit'),
 ]
