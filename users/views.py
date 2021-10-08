@@ -41,9 +41,9 @@ class LoginView(View):
             )
             if user:
                 login(request, user)
-                return redirect(reverse("signup"))
+                return redirect(reverse("homepage"))
     form = LoginForm()
-    return render(request, "login_form.html", {"form": form})      
+    return render(request, "login.html", {"form": form})      
     
   def get(self,request):
     template_name = 'login.html'
