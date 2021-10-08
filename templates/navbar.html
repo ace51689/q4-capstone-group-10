@@ -1,12 +1,17 @@
 <nav>
-    {% if not user.is_authenticated %}
-    <a href="/login/">Login</a>
-    <a href="/signup/">Signup</a>
+
+    {% if user.is_authenticated %}
+    <button><a href="/admin/">Admin</a></button>
+    <button><a href="/logout/">Logout</a></button>
+    <button><a href="/profile/{{ request.user.id }}/">User Profile</a></button>
+  
+    <br />
+    <button><a href="/create_post/">Create a Post</a></button>
     {% else %}
-    <a 
-    {% comment %} href="/" {% endcomment %}
-    >Home</a>
-    <a href="/logout/">Logout</a>
+    <button><a href="/">Home</a></button>
+    <button><a href="/login/">Login</a></button>
+    <button><a href="/signup/">Signup</a></button>
+    
     {% endif %}
   </nav>
   
