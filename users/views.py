@@ -36,7 +36,8 @@ class LoginView(View):
         if form.is_valid():
             data = form.cleaned_data
             user = authenticate(
-                request, username=data.get("username"),
+                request, 
+                username=data.get("username"),
                 password=data.get("password")
             )
             if user:
