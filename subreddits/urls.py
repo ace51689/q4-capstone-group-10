@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.urls.conf import include
+from subreddits import views 
+
 
 urlpatterns = [
-    path('', include('users.urls')),
-    path('', include('subreddits.urls')),
-    path('admin/', admin.site.urls),
+    path('subreddit/<int:id>/', views.subreddit_view, name='subreddit'),
+    path('subreddit/create/', views.CreateSubredditView.as_view(), name='create-subreddit'),
+    path('subreddit/edit/<int:id>/', views.edit_subreddit_view, name='create-subreddit'),
 ]
