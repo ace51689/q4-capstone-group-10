@@ -21,5 +21,7 @@ from subreddits import views
 urlpatterns = [
     path('subreddit/<int:id>/', views.subreddit_view, name='subreddit'),
     path('subreddit/create/', views.CreateSubredditView.as_view(), name='create-subreddit'),
-    path('subreddit/edit/<int:id>/', views.edit_subreddit_view, name='create-subreddit'),
+    path('subreddit/<int:id>/edit/', views.edit_subreddit_view, name='edit-subreddit'),
+    path('subreddit/<int:id>/join/', views.join_subreddit, name='join-subreddit'),
+    path('subreddit/<int:id>/leave/', views.leave_subreddit, name='leave-subreddit'),
 ]

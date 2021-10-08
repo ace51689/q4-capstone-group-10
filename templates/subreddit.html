@@ -1,6 +1,14 @@
 {% include "navbar.html" %} 
 <h1>r/{{subreddit.name}}</h1>
 
+{% if request.user not in members %}
+<a href="/subreddit/{{subreddit.id}}/join/">Join</a>
+{% else %}
+<a href="/subreddit/{{subreddit.id}}/leave/">Leave</a>
+{% endif %}
+
+<div>Members: {{subreddit.members.count}}</div>
+
 <ul>
   {% for post in posts %}
     <li>
