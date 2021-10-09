@@ -38,17 +38,14 @@ def edit_subreddit_view(request, id):
   subreddit = Subreddit.objects.get(id=id)
 
   if request.method == "POST":
-    form = EditSubredditForm(request.POST)
+    form = EditSubredditForm(subreddit, request.POST)
     if form.is_valid():
       data = form.cleaned_data
       moderator_to_add = data.get('moderators')[0]
       subreddit.moderators.add(moderator_to_add)
-      if moderator_to_add not in subreddit.members.all():
-        subreddit.members.add(moderator_to_add)
-      
       return HttpResponseRedirect(reverse("subreddit", args=(id,)))
 
-  form = EditSubredditForm()
+  form = EditSubredditForm(subreddit)
 
   return render(request, "signup.html", { "form": form })
 

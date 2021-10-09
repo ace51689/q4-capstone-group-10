@@ -1,5 +1,7 @@
 from django import forms
+from django.forms import fields
 from users.models import User
+from subreddits.models import Subreddit
 
 '''
 	name = models.CharField(max_length=30)
@@ -12,9 +14,13 @@ from users.models import User
 class CreateSubredditForm(forms.Form):
   name = forms.CharField(max_length=30)
 
-class EditSubredditForm(forms.Form):
-  moderators = forms.ModelMultipleChoiceField(queryset=User.objects.all())
+class EditSubredditForm(forms.ModelForm):
+  # moderators = forms.ModelMultipleChoiceField(queryset=User.objects.all())
 
-  # def __init__(self, subreddit, *args, **kwargs):
-  #   super(EditSubredditForm, self).__init__(*args, **kwargs)
-  #   self.fields['moderators'].queryset = subreddit.members.all()
+  def __init__(self, subreddit, *args, **kwargs):
+    super(EditSubredditForm, self).__init__(*args, **kwargs)
+    self.fields['moderators'].queryset = subreddit.members.all()
+
+  class Meta:
+    model = Subreddit
+    fields = ('moderators', )
