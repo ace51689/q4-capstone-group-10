@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import fields
+from django.forms.widgets import PasswordInput
 from users.models import User
 from subreddits.models import Subreddit
 
@@ -14,13 +15,35 @@ from subreddits.models import Subreddit
 class CreateSubredditForm(forms.Form):
   name = forms.CharField(max_length=30)
 
-class EditSubredditForm(forms.ModelForm):
-  # moderators = forms.ModelMultipleChoiceField(queryset=User.objects.all())
+class AddModeratorForm(forms.ModelForm):
 
   def __init__(self, subreddit, *args, **kwargs):
-    super(EditSubredditForm, self).__init__(*args, **kwargs)
-    self.fields['moderators'].queryset = subreddit.members.all()
+    super(AddModeratorForm, self).__init__(*args, **kwargs)
+    member_ids = [member.id for member in subreddit.members.all()]
+    admin_id = subreddit.admin.id
+    moderator_ids = [moderator.id for moderator in subreddit.moderators.all()]
+    member_ids.remove(admin_id)
+    for moderator_id in moderator_ids:
+      member_ids.remove(moderator_id)
+    potential_moderators = subreddit.members.filter(id__in=member_ids)
+    self.fields['moderators'].queryset = potential_moderators
 
   class Meta:
     model = Subreddit
     fields = ('moderators', )
+
+
+class RemoveModChangeAdminForm(forms.ModelForm):
+
+  def __init__(self, subreddit, *args, **kwargs):
+    super(RemoveModChangeAdminForm, self).__init__(*args, **kwargs)
+    moderators = subreddit.moderators.all()
+    self.fields['moderators'].queryset = moderators
+
+  class Meta:
+    model = Subreddit
+    fields = ('moderators', )
+
+
+class DeleteSubredditForm(forms.Form):
+  password = forms.CharField(max_length=128, widget=PasswordInput)
