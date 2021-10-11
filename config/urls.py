@@ -21,5 +21,6 @@ urlpatterns = [
     path('', include('homepage.urls')),
     path('', include('users.urls')),
     path('', include('subreddits.urls')),
+    path('', include('spotify.urls')),
     path('admin/', admin.site.urls),
 ]

@@ -10,6 +10,7 @@ Django = "^3.2.8"
 django-environ = "^0.7.0"
 django-mptt = "^0.13.4"
 django-sslserver = "^0.22"
+requests = "^2.26.0"
 
 [tool.poetry.dev-dependencies]
 
