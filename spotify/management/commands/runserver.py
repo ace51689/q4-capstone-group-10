@@ -1,8 +1,7 @@
-from django.core.management.base import BaseCommand
-from os import system as run
+from sslserver.management.commands import runsslserver
 
 
-class Command(BaseCommand):
+class Command(runsslserver.Command):
 	def handle(self, *args, **options):
-		run('python manage.py runsslserver')
+		super(Command, self).handle(self, *args, **options)
 		return '\n'
