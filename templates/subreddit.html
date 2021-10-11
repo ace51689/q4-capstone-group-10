@@ -1,10 +1,18 @@
 {% include "navbar.html" %} 
 <h1>r/{{subreddit.name}}</h1>
 
-{% if request.user not in members %}
-<a href="/subreddit/{{subreddit.id}}/join/">Join</a>
-{% else %}
-<a href="/subreddit/{{subreddit.id}}/leave/">Leave</a>
+{% if request.user == subreddit.admin %}
+  <a href="/subreddit/{{subreddit.id}}/add-moderator/">Add Moderator</a>
+  <a href="/subreddit/{{subreddit.id}}/remove-moderator/">Remove Moderator</a>
+  <a href="/subreddit/{{subreddit.id}}/change-admin/">Assign New Admin</a>
+  <a href="/subreddit/{{subreddit.id}}/delete/">Delete Subreddit</a>
+{% endif %}
+
+{% if request.user == subreddit.admin %}
+{% elif request.user in members %}
+  <a href="/subreddit/{{subreddit.id}}/leave/">Leave</a>
+{% elif request.user not in members %}
+  <a href="/subreddit/{{subreddit.id}}/join/">Join</a>
 {% endif %}
 
 <div>Members: {{subreddit.members.count}}</div>
