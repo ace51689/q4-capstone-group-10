@@ -41,11 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'spotify',
     'django.contrib.staticfiles',
     'mptt',
     'users',
     'posts',
     'subreddits',
+    'sslserver',
 ]
 
 MIDDLEWARE = [
