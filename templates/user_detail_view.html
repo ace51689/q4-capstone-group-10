@@ -1,1 +1,37 @@
-{{user}}
+{% extends 'homepage.html' %}
+
+{% block title %}{{user.username}}{% endblock %}
+{% block content %}
+{% block user_content %}
+<div id="user-profile">
+	<div id="user-content">
+		<div>
+			<h2>Subreddits</h2>
+			<ul>
+				{% for subreddit in subreddits %}
+				<li>{{subreddit}}</li>
+				{% endfor %}
+			</ul>
+		</div>
+		<hr>
+		<div>
+			<h2>Posts</h2>
+			{% for post in posts %}
+			{% include 'post_template.html' %}
+			{% endfor %}
+		</div>
+		<hr>
+		<div>
+			<h2>Comments</h2>
+			<ul>
+				{% for comment in comments %}
+				<li>{{comment}}</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<hr>
+	{% include 'user_detail_template.html' %}
+</div>
+{% endblock user_content %}
+{% endblock content %}
