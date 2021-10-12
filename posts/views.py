@@ -30,3 +30,25 @@ def create_post_view(request, id):
   form = CreatePostForm()
 
   return render(request, 'create_post.html', { 'form': form })
+
+
+def create_comment_view(request, id):
+  post = Post.objects.get(id=id)
+
+  if request.method == 'POST':
+    form = CreateCommentForm(request.POST)
+    if form.is_valid():
+      data = form.cleaned_data
+      comment = Post(
+        body = data.get('body'),
+        is_comment = True,
+        author = request.user,
+        parent = post
+      )
+      comment.save()
+      print(post.id)
+      return HttpResponseRedirect(reverse('post', args=(post.id,)))
+
+  form = CreateCommentForm()
+
+  return render(request, 'create_post.html', { 'form': form })
