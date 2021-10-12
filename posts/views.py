@@ -25,6 +25,7 @@ def create_post_view(request, id):
         subreddit = subreddit,
       )
       post.save()
+      subreddit.posts.add(post)
       return HttpResponseRedirect(reverse('post', args=(post.id,)))
 
   form = CreatePostForm()
@@ -46,7 +47,6 @@ def create_comment_view(request, id):
         parent = post
       )
       comment.save()
-      print(post.id)
       return HttpResponseRedirect(reverse('post', args=(post.id,)))
 
   form = CreateCommentForm()
