@@ -16,6 +16,7 @@
         <h2 id="page-title"></h2>
 		<div>
 			{% if request.user.is_authenticated %}
+			<a href="/subreddit/browse/"><button>Browse Subreddits</button></a>
 			<a href="/profile"><button>Profile</button></a>
 			<a href="/logout"><button>Logout</button></a>
 			{% else %}
