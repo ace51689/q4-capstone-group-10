@@ -37,6 +37,10 @@ urlpatterns = [
     path('', include('homepage.urls')),
     path('', include('users.urls')),
     path('', include('subreddits.urls')),
+<<<<<<< HEAD
 >>>>>>> cf3a4cb13565d7b72f94ca0e43e97cc5f3b6f2ad
+=======
+    path('', include('spotify.urls')),
+>>>>>>> 0fbc9f1571f729e2ff27bcbb898f09835d244557
     path('admin/', admin.site.urls),
 ]
