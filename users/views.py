@@ -9,10 +9,6 @@ from users.forms import CreateUserForm, LoginForm
 
 # Create your views here.
 
-<<<<<<< HEAD
-
-=======
->>>>>>> cf3a4cb13565d7b72f94ca0e43e97cc5f3b6f2ad
 class CreateUserView(View):
     template_name = 'signup.html'
     form = CreateUserForm()
@@ -28,17 +24,12 @@ class CreateUserView(View):
         username=data.get('username'),
         password=data.get('password1')
         )
-<<<<<<< HEAD
-    return redirect(reverse("signup"))
-
-    return render(request, self.template_name, { "form": self.form })
-=======
       return redirect(reverse('login'))
 
     return render(request, self.template_name, { "form": self.form })
 
 class LoginView(View):
-  
+
   def post(self,request):
     if request.method == "POST":
         form = LoginForm(request.POST)
@@ -63,5 +54,5 @@ class LoginView(View):
 
 def logout_view(request):
     logout(request)
+
     return redirect(reverse("login"))
->>>>>>> cf3a4cb13565d7b72f94ca0e43e97cc5f3b6f2ad
