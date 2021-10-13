@@ -19,10 +19,12 @@
 
 <ul>
   {% for post in posts %}
+  {% if not post.is_comment %}
     <li>
       <h2>{{post.title}}</h2>
       <h4>created by: {{post.author}}</h4>
       <p>{{post.body}}</p>
     </li>
+    {% endif %}
   {% endfor %}
 </ul>
