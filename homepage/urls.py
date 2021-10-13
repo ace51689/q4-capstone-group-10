@@ -1,4 +1,4 @@
-"""config URL Configuration
+git m"""config URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
@@ -20,4 +20,5 @@ from homepage import views
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
+    path('profile/<int:id>/', views.user_detail_view, name='profile'),
 ]
