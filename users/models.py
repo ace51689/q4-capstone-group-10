@@ -9,3 +9,4 @@ class User(AbstractUser):
 	)
 	access_token = models.TextField()
 	refresh_token = models.TextField()
+	is_premium = models.BooleanField(default=False)
