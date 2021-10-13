@@ -23,8 +23,28 @@ main {
 	flex-direction: column;
 }
 
+main > div:first-child {
+	border-right: 1px solid black;
+	border-left: 1px solid black;
+	margin: 0 auto;
+    height: 100%;
+    width: 80%;
+}
+
+a {
+	outline: 0;
+}
+
+#text-logo {
+	color: initial;
+	text-decoration: none;
+}
+
+#page-title {
+	text-transform: capitalize;
+}
+
 #home {
-	flex-grow: 1;
 	display: flex;
 }
 
@@ -66,4 +86,29 @@ main {
 .post-content h2,
 .post-content h3 {
 	margin: 0;
+}
+
+#user-profile {
+	display: flex;
+}
+
+#user-content {
+	flex-grow: 3;
+}
+
+#user-content > div {
+	margin: 10px;
+}
+
+#user-content > div > h2 {
+	text-decoration: underline;
+}
+
+#user-info {
+	flex-grow: .5;
+	text-align: center;
+}
+
+#user-info ul {
+	list-style: none;
 }
