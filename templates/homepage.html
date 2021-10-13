@@ -1,4 +1,46 @@
-
-<center>
-    {% include 'navbar.html' %}
-</center>
+{% load static %}
+{% load mptt_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %}Home{% endblock %}</title>
+	<link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="{% static 'script.js' %}" defer></script>
+</head>
+<body>
+	<header>
+		<h1>LOGO</h1>
+        <h2 id="page-title"></h2>
+		<div>
+			{% if request.user.is_authenticated %}
+			<a href="/profile"><button>Profile</button></a>
+			<a href="/logout"><button>Logout</button></a>
+			{% else %}
+			<a href="/login"><button>Login</button></a>
+			{% endif %}
+		</div>
+	</header>
+	<hr>
+	<main>
+		{% block content %}
+        <div id="home">
+			<nav style="display: none;">
+				<a href="/#admin"><button>Admin</button></a>
+				<a href="/#create_post"><button>Create a Post</button></a>
+			</nav>
+			<div id="music-list"></div>
+            <div id="content">
+				{% for post in posts %}
+				{% include 'post_template.html' %}
+				{% endfor %}
+			</div>
+            <div id="popular-subreddits"></div>
+		</div>
+		{% endblock content %}
+        <div id="player"></div>
+	</main>
+</body>
+</html>

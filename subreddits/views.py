@@ -1,6 +1,6 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect
 from django.views.generic import View
-from subreddits.forms import CreateSubredditForm, EditSubredditForm
+from subreddits.forms import CreateSubredditForm, AddModeratorForm, RemoveModChangeAdminForm, DeleteSubredditForm
 from subreddits.models import Subreddit
 from posts.models import Post
 
@@ -34,21 +34,52 @@ class CreateSubredditView(View):
     return render(request, self.template_name, { 'form': self.form })
 
 
-def edit_subreddit_view(request, id):
+def add_moderator_view(request, id):
   subreddit = Subreddit.objects.get(id=id)
 
   if request.method == "POST":
-    form = EditSubredditForm(request.POST)
+    form = AddModeratorForm(subreddit, request.POST)
     if form.is_valid():
       data = form.cleaned_data
       moderator_to_add = data.get('moderators')[0]
       subreddit.moderators.add(moderator_to_add)
-      if moderator_to_add not in subreddit.members.all():
-        subreddit.members.add(moderator_to_add)
-      
       return HttpResponseRedirect(reverse("subreddit", args=(id,)))
 
-  form = EditSubredditForm()
+  form = AddModeratorForm(subreddit)
+
+  return render(request, "signup.html", { "form": form })
+
+
+def remove_moderator_view(request, id):
+  subreddit = Subreddit.objects.get(id=id)
+
+  if request.method == "POST":
+    form = RemoveModChangeAdminForm(subreddit, request.POST)
+    if form.is_valid():
+      data = form.cleaned_data
+      moderator_to_remove = data.get('moderators')[0]
+      subreddit.moderators.remove(moderator_to_remove)
+      return HttpResponseRedirect(reverse("subreddit", args=(id,)))
+
+  form = RemoveModChangeAdminForm(subreddit)
+
+  return render(request, "signup.html", { "form": form })
+
+
+def change_admin_view(request, id):
+  subreddit = Subreddit.objects.get(id=id)
+
+  if request.method == "POST":
+    form = RemoveModChangeAdminForm(subreddit, request.POST)
+    if form.is_valid():
+      data = form.cleaned_data
+      moderator_to_promote = data.get('moderators')[0]
+      subreddit.admin = moderator_to_promote
+      subreddit.moderators.remove(moderator_to_promote)
+      subreddit.save()
+      return HttpResponseRedirect(reverse("subreddit", args=(id,)))
+
+  form = RemoveModChangeAdminForm(subreddit)
 
   return render(request, "signup.html", { "form": form })
 
@@ -66,3 +97,21 @@ def leave_subreddit(request, id):
   request.user.subreddits.remove(subreddit_to_leave)
   return HttpResponseRedirect(reverse('subreddit', args=(id,)))
 
+
+def delete_subreddit_view(request, id):
+  
+  if request.method == "POST":
+    form = DeleteSubredditForm(request.POST)
+    if form.is_valid():
+      data = form.cleaned_data
+      subreddit_to_delete = Subreddit.objects.get(id=id)
+      admin = subreddit_to_delete.admin
+      if admin.check_password(data.get('password')):
+        subreddit_to_delete.delete()
+        return HttpResponseRedirect(reverse('homepage'))
+      
+      return HttpResponseRedirect(reverse("subreddit", args=(id,)))
+
+  form = DeleteSubredditForm()
+
+  return render(request, "delete_subreddit.html", { "form": form })
