@@ -25,4 +25,6 @@ urlpatterns = [
     path('subreddit/<int:id>/change-admin/', views.change_admin_view, name='change-admin'),
     path('subreddit/<int:id>/join/', views.join_subreddit, name='join-subreddit'),
     path('subreddit/<int:id>/leave/', views.leave_subreddit, name='leave-subreddit'),
+    path('subreddit/browse/', views.browse_subreddits_view, name='browse-subreddits'),
+    path('subreddit/<int:id>/delete/', views.delete_subreddit_view, name='delete-subreddit'),
 ]

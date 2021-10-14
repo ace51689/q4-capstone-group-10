@@ -2,9 +2,10 @@
     {% if user.is_authenticated %}
     
     <button><a href="/admin/">Admin</a></button>
-    <button><a href="/logout/">Logout</a></button>
+    <button><a href="/">Home</a></button>
     <button><a href="/profile/{{ request.user.id }}/">User Profile</a></button>
     <button><a href="/subreddit/create/">Create Subreddit</a></button>
+    <button><a href="/logout/">Logout</a></button>
   
     <br />
     

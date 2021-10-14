@@ -1,5 +1,6 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect
 from django.views.generic import View
+from django.db.models import Count
 from subreddits.forms import CreateSubredditForm, AddModeratorForm, RemoveModChangeAdminForm, DeleteSubredditForm
 from subreddits.models import Subreddit
 from posts.models import Post
@@ -115,3 +116,10 @@ def delete_subreddit_view(request, id):
   form = DeleteSubredditForm()
 
   return render(request, "delete_subreddit.html", { "form": form })
+
+
+def browse_subreddits_view(request):
+  context = { 'subreddits': Subreddit.objects.annotate(
+              post_count=Count('posts')).order_by('-post_count') }
+  
+  return render(request, 'browse_subreddits.html', context)
