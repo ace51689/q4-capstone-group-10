@@ -73,7 +73,26 @@ a {
 }
 
 .post {
-	outline: 2px solid red;
+	border: 2px solid;
+	display: flex;
+}
+
+.voting-buttons {
+	display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.voting-buttons > span {
+	font-size: x-large;
+}
+
+.voting-buttons > a {
+	transform: scale(.8);
+}
+
+.post-content {
+	flex-grow: 1;
 }
 
 .post-header{
@@ -82,9 +101,9 @@ a {
     padding: 10px;
 }
 
-.post-content h1,
-.post-content h2,
-.post-content h3 {
+.post-body h1,
+.post-body h2,
+.post-body h3 {
 	margin: 0;
 }
 

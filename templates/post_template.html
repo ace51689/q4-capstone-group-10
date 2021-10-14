@@ -1,12 +1,16 @@
 <div class="post">
-	<div></div>
-	<div>
+	<div class="voting-buttons">
+		<a href="/post/{{post.id}}/upvote"><button><i data-feather="arrow-up"></i></button></a>
+		<span>0</span>
+		<a href="/post/{{post.id}}/downvote"><button><i data-feather="arrow-down"></i></button></a>
+	</div>
+	<hr>
+	<div class="post-content">
 		<div class="post-header">
 			<span>r/{{post.subreddit}} | Posted by u/{{post.author}}</span>
-			<a href="#join"><button>Join</button></a>
 		</div>
 		<hr>
-		<div class="post-content">
+		<div class="post-body">
 			<h2>{{post.title}}</h2>
 			<p>{{post.body}}</p>
 		</div>
