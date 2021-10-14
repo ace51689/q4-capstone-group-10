@@ -6,6 +6,7 @@
 <p>{{post.body}}</p>
 <div>
 <a href="/post/{{post.id}}/comment/">Leave a Comment</a>
+
 {% if request.user in post.up_votes.all %}
   <a href="/post/{{post.id}}/upvote/">Remove Upvote</a>
 {% else %}
@@ -20,4 +21,3 @@
   <a href="/post/{{post.id}}/downvote/">Downvote</a>
 {% endif %}
 </div>
- 

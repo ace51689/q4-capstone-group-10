@@ -10,26 +10,26 @@ from users.forms import CreateUserForm, LoginForm
 # Create your views here.
 
 class CreateUserView(View):
-  template_name = 'signup.html'
-  form = CreateUserForm()
+    template_name = 'signup.html'
+    form = CreateUserForm()
 
-  def get(self, request):
-    return render(request, self.template_name, { "form": self.form })
+    def get(self, request):
+        return render(request, self.template_name, { "form": self.form })
 
-  def post(self, request):
-    form = CreateUserForm(request.POST)
-    if form.is_valid():
-      data = form.cleaned_data
-      user = User.objects.create_user(
-        username=data.get('username'),
-        password=data.get('password1')
-        )
-      return redirect(reverse('login'))
+    def post(self, request):
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = User.objects.create_user(
+            username=data.get('username'),
+            password=data.get('password1')
+            )
+            return redirect(reverse('login'))
 
-    return render(request, self.template_name, { "form": self.form })
+        return render(request, self.template_name, { "form": self.form })
 
 class LoginView(View):
-  
+
   def post(self,request):
     if request.method == "POST":
         form = LoginForm(request.POST)
@@ -54,4 +54,5 @@ class LoginView(View):
 
 def logout_view(request):
     logout(request)
+
     return redirect(reverse("login"))
