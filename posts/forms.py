@@ -1,5 +1,6 @@
 from posts.models import Post
-from django.contrib.auth import ModelForm
+from django.contrib.auth import models
+from django import forms
 
 
 class PostCreationForm(forms.ModelForm):
