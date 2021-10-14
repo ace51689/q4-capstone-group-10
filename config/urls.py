@@ -16,15 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
-from posts.views import post_view
 
 
 urlpatterns = [
-    path('postcreation/<int:id>/', view.post_view(), name='postcreation'),
-    path('Posts/', include('Posts.urls')),
     path('', include('homepage.urls')),
     path('', include('users.urls')),
     path('', include('subreddits.urls')),
     path('', include('spotify.urls')),
+    path('', include('posts.urls')),
     path('admin/', admin.site.urls),
 ]

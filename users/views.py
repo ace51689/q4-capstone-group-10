@@ -18,15 +18,15 @@ class CreateUserView(View):
 
     def post(self, request):
         form = CreateUserForm(request.POST)
-    if form.is_valid():
-        data = form.cleaned_data
-        user = User.objects.create_user(
-        username=data.get('username'),
-        password=data.get('password1')
-        )
-      return redirect(reverse('login'))
+        if form.is_valid():
+            data = form.cleaned_data
+            user = User.objects.create_user(
+            username=data.get('username'),
+            password=data.get('password1')
+            )
+            return redirect(reverse('login'))
 
-    return render(request, self.template_name, { "form": self.form })
+        return render(request, self.template_name, { "form": self.form })
 
 class LoginView(View):
 
