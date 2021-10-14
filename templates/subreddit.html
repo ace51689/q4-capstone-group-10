@@ -11,6 +11,7 @@
 {% if request.user == subreddit.admin %}
 {% elif request.user in members %}
   <a href="/subreddit/{{subreddit.id}}/leave/">Leave</a>
+  <a href="/subreddit/{{subreddit.id}}/create-post/">Create Post</a>
 {% elif request.user not in members %}
   <a href="/subreddit/{{subreddit.id}}/join/">Join</a>
 {% endif %}

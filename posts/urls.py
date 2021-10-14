@@ -20,4 +20,6 @@ from posts import views
 
 urlpatterns = [
     path('post/<int:id>/', views.post_view, name='post'),
+    path('subreddit/<int:id>/create-post/', views.create_post_view, name='create-post'),
+    path('post/<int:id>/comment/', views.create_comment_view, name='create-comment'),
 ]
