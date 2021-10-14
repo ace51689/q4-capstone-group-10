@@ -17,7 +17,6 @@ from django.contrib import admin
 from django.urls import path, include
 from subreddits import views
 
-
 urlpatterns = [
     path('subreddit/<int:id>/', views.subreddit_view, name='subreddit'),
     path('subreddit/create/', views.CreateSubredditView.as_view(), name='create-subreddit'),
