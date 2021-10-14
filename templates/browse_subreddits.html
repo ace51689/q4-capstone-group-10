@@ -1,0 +1,5 @@
+{% include "navbar.html" %}
+{% for subreddit in subreddits %}
+  <h2><a href="/subreddit/{{subreddit.id}}/">r/{{subreddit.name}}</a></h2>
+  <p>Number of members: {{subreddit.members.count}} Number of posts: {{subreddit.posts.count}}</p>
+{% endfor %}

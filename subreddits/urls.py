@@ -14,9 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from subreddits import views 
-
+from django.urls import path, include
+from subreddits import views
 
 urlpatterns = [
     path('subreddit/<int:id>/', views.subreddit_view, name='subreddit'),
@@ -26,5 +25,6 @@ urlpatterns = [
     path('subreddit/<int:id>/change-admin/', views.change_admin_view, name='change-admin'),
     path('subreddit/<int:id>/join/', views.join_subreddit, name='join-subreddit'),
     path('subreddit/<int:id>/leave/', views.leave_subreddit, name='leave-subreddit'),
+    path('subreddit/browse/', views.browse_subreddits_view, name='browse-subreddits'),
     path('subreddit/<int:id>/delete/', views.delete_subreddit_view, name='delete-subreddit'),
 ]

@@ -6,8 +6,8 @@ from posts.forms import CreatePostForm, CreateCommentForm
 
 # Create your views here.
 def post_view(request, id):
-  post = Post.objects.get(id=id)
-  return render(request, 'post.html', { 'post': post })
+    post = Post.objects.get(id=id)
+    return render(request, 'post.html', { 'post': post })
 
 
 def create_post_view(request, id):
