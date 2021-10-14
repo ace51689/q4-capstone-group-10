@@ -1,5 +1,8 @@
 from posts.models import Post
+<<<<<<< Updated upstream
 from django.contrib.auth import models
+=======
+>>>>>>> Stashed changes
 from django import forms
 
 
