@@ -15,14 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.urls.conf import include
+from posts import views 
 
 
 urlpatterns = [
-    path('', include('homepage.urls')),
-    path('', include('users.urls')),
-    path('', include('subreddits.urls')),
-    path('', include('spotify.urls')),
-    path('', include('posts.urls')),
-    path('admin/', admin.site.urls),
+    path('post/<int:id>/', views.post_view, name='post'),
 ]
