@@ -1,8 +1,8 @@
 <div class="post">
 	<div class="voting-buttons">
-		<a href="/post/{{post.id}}/upvote"><button><i data-feather="arrow-up"></i></button></a>
+		<a href="/post/{{post.id}}/upvote"><i data-feather="arrow-up"></i></a>
 		<span>0</span>
-		<a href="/post/{{post.id}}/downvote"><button><i data-feather="arrow-down"></i></button></a>
+		<a href="/post/{{post.id}}/downvote"><i data-feather="arrow-down"></i></a>
 	</div>
 	<hr>
 	<div class="post-content">
@@ -21,6 +21,8 @@
 			<p>{{post.body}}</p>
 		</div>
 		<hr>
-		<div class="post-options"></div>
+		<div class="post-options">
+			<a href="/post/{{post.id}}/#comments" class="icon-links"><i data-feather="message-square"></i> <span>{{comments_count}} Comments</span></a>
+		</div>
 	</div>
 </div>

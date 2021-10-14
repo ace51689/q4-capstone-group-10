@@ -35,6 +35,16 @@ a {
 	outline: 0;
 }
 
+a > svg {
+	color: black;
+}
+
+.icon-links {
+	display: flex;
+    align-items: center;
+	text-decoration: none;
+}
+
 #text-logo {
 	color: initial;
 	text-decoration: none;
@@ -100,6 +110,10 @@ a {
     display: flex;
     justify-content: space-between;
     padding: 10px;
+}
+
+.post-body {
+	margin: 0 20px;
 }
 
 .post-body h1,

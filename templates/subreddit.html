@@ -3,14 +3,6 @@
 {% block content %}
 <div id="subreddit">
     <div id="subreddit-content">
-
-		{% if request.user == subreddit.admin %}
-		{% elif request.user in members %}
-			<a href="/subreddit/{{subreddit.id}}/leave/">Leave</a>
-			<a href="/subreddit/{{subreddit.id}}/create-post/">Create Post</a>
-		{% elif request.user not in members %}
-			<a href="/subreddit/{{subreddit.id}}/join/">Join</a>
-		{% endif %}
 		<ul>
 			{% for post in posts %}
 			{% include 'post_template.html' %}

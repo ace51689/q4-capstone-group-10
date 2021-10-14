@@ -2,14 +2,19 @@
 	<h1>r/{{subreddit.name}}</h1>
 	<hr>
 	<ul>
-		<li>{{subreddits.members|length}} Members</li>
+		<li>{{subreddit.members|length}} Members</li>
 		<li>Number of Posts: {{posts|length}}</li>
-		<li>Number of Comments: {{comments|length}}</li>
+		<li>Admin: <a href="/profile/{{subreddit.admin.id}}/">{{subreddit.admin}}</a></li>
 		{% if request.user == subreddit.admin %}
 			<li><a href="/subreddit/{{subreddit.id}}/add-moderator/"><button>Add Moderator</button></a></li>
 			<li><a href="/subreddit/{{subreddit.id}}/remove-moderator/"><button>Remove Moderator</button></a></li>
 			<li><a href="/subreddit/{{subreddit.id}}/change-admin/"><button>Assign New Admin</button></a></li>
 			<li><a href="/subreddit/{{subreddit.id}}/delete/"><button>Delete Subreddit</button></a></li>
+		{% elif request.user in members %}
+			<li><a href="/subreddit/{{subreddit.id}}/leave/"><button>Leave</button></a></li>
+			<li><a href="/subreddit/{{subreddit.id}}/create-post/"><button>Create Post</button></a></li>
+		{% elif request.user not in members %}
+			<li><a href="/subreddit/{{subreddit.id}}/join/"><button>Join</button></a></li>
 		{% endif %}
 	</ul>
 </div>
