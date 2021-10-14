@@ -7,11 +7,17 @@
 	<hr>
 	<div class="post-content">
 		<div class="post-header">
-			<span>r/{{post.subreddit}} | Posted by u/{{post.author}}</span>
+			<span>
+				<a href="/subreddit/{{post.subreddit.id}}">
+					<b>r/{{post.subreddit}}</b>
+				</a>
+				| Posted by
+				<a href="/profile/{{post.author.id}}">u/{{post.author}}</a>
+			</span>
 		</div>
 		<hr>
 		<div class="post-body">
-			<h2>{{post.title}}</h2>
+			<h2><a href="/post/{{post.id}}/">{{post.title}}</a></h2>
 			<p>{{post.body}}</p>
 		</div>
 		<hr>
