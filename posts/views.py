@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse
 from django.views.generic import View
+from django.contrib.auth.decorators import login_required
 from posts.models import Post
 from subreddits.models import Subreddit
 from posts.forms import CreatePostForm, CreateCommentForm
@@ -9,7 +10,7 @@ def post_view(request, id):
     post = Post.objects.get(id=id)
     return render(request, 'post.html', { 'post': post })
 
-
+@login_required
 def create_post_view(request, id):
   subreddit = Subreddit.objects.get(id=id)
 
@@ -32,7 +33,7 @@ def create_post_view(request, id):
 
   return render(request, 'create_post.html', { 'form': form })
 
-
+@login_required
 def create_comment_view(request, id):
   post = Post.objects.get(id=id)
 
