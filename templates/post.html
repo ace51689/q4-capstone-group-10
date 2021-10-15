@@ -4,3 +4,10 @@
 <h4>created by: {{post.author}}</h4>
 <p>{{post.body}}</p>
 <a href="/post/{{post.id}}/comment/">Leave a Comment</a>
+{% comment %} {% if request.user == post.author %} {% endcomment %}
+<a href="/post/{{post.id}}/delete/">Delete Post</a>
+{% comment %} {% elif request.user == post.subreddit.admin %} {% endcomment %}
+{% comment %} <a href="/post/{{post.id}}/delete/">Delete Post</a> {% endcomment %}
+{% comment %} {% elif request.user in post.subreddit.moderators %} {% endcomment %}
+{% comment %} <a href="/post/{{post.id}}/delete/">Delete Post</a> {% endcomment %}
+{% comment %} {% endif %} {% endcomment %}

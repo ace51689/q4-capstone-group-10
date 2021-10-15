@@ -1,5 +1,4 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse
-from django.views.generic import View
 from posts.models import Post
 from subreddits.models import Subreddit
 from posts.forms import CreatePostForm, CreateCommentForm
@@ -52,3 +51,19 @@ def create_comment_view(request, id):
   form = CreateCommentForm()
 
   return render(request, 'create_post.html', { 'form': form })
+
+# TODO: Add login_required decorator. Stretch: Display conformation or 'are you sure?' message
+def delete_post_view(request, id):
+  post_to_delete = Post.objects.get(id=id)
+  author = post_to_delete.author
+  # print(author)
+  subreddit_moderators = post_to_delete.subreddit.moderators.all()
+  subreddit_admin = post_to_delete.subreddit.admin
+  # print(subreddit_admin)
+  user = request.user
+  if user == author or user in subreddit_moderators or user == subreddit_admin:
+    # post_to_delete.delete()
+    print('yep')
+    return HttpResponseRedirect(reverse('homepage'))
+    
+  return HttpResponseRedirect(reverse('post', args=(id)))
