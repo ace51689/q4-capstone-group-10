@@ -1,8 +1,26 @@
+{% load mathfilters %}
 {% include "navbar.html" %} 
 <h2>{{post.title}}</h2>
 <h3>posted on: <a href="/subreddit/{{post.subreddit.id}}/">r/{{post.subreddit}}</a></h3>
 <h4>created by: {{post.author}}</h4>
 <p>{{post.body}}</p>
+
+<div>
 {% if request.user.is_authenticated and request.user in post.subreddit.members.all%}
 <a href="/post/{{post.id}}/comment/">Leave a Comment</a>
 {% endif %}
+
+{% if request.user in post.up_votes.all %}
+  <a href="/post/{{post.id}}/upvote/">Remove Upvote</a>
+{% else %}
+  <a href="/post/{{post.id}}/upvote/">Upvote</a>
+{% endif %}
+
+{{ post.up_votes.count|sub:post.down_votes.count}}
+
+{% if request.user in post.down_votes.all %}
+  <a href="/post/{{post.id}}/downvote/">Remove Downvote</a>
+{% else %}
+  <a href="/post/{{post.id}}/downvote/">Downvote</a>
+{% endif %}
+</div>
