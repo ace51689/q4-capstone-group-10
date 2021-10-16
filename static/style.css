@@ -103,6 +103,10 @@ a {
 	font-size: x-large;
 }
 
+.voting-buttons > .active-button {
+	transform: scale(1.2);
+}
+
 .voting-buttons > a {
 	transform: scale(.8);
 }
