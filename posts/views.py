@@ -54,7 +54,7 @@ def create_comment_view(request, id):
 
   return render(request, 'create_post.html', { 'form': form })
 
-
+@login_required
 def upvote_post(request, id):
   post = Post.objects.get(id=id)
   if request.user in post.up_votes.all():
@@ -66,7 +66,7 @@ def upvote_post(request, id):
     post.up_votes.add(request.user)
   return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-
+@login_required
 def downvote_post(request, id):
   post = Post.objects.get(id=id)
   if request.user in post.down_votes.all():
