@@ -1,7 +1,8 @@
+{% load mathfilters %}
 <div class="post">
 	<div class="voting-buttons">
 		<a href="/post/{{post.id}}/upvote"><i data-feather="arrow-up"></i></a>
-		<span>0</span>
+		<span>{{post.up_votes.count|sub:post.down_votes.count}}</span>
 		<a href="/post/{{post.id}}/downvote"><i data-feather="arrow-down"></i></a>
 	</div>
 	<hr>

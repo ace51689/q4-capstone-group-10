@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'posts',
     'subreddits',
     'sslserver',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [
