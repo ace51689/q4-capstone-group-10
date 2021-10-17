@@ -11,6 +11,7 @@ django-environ = "^0.7.0"
 django-mptt = "^0.13.4"
 django-sslserver = "^0.22"
 requests = "^2.26.0"
+django-mathfilters = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
 

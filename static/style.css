@@ -3,6 +3,7 @@ body {
     display: flex;
     height: 100vh;
     flex-direction: column;
+	background-color: var(--background-color);
 }
 
 header {
@@ -11,6 +12,7 @@ header {
 	padding: 10px;
 	align-items: center;
 	justify-content: space-between;
+	background-color: var(--secondary-background);
 }
 
 hr {
@@ -24,8 +26,11 @@ main {
 }
 
 main > div:first-child {
-	border-right: 1px solid black;
-	border-left: 1px solid black;
+	border-right: 2px solid rgb(238, 238, 238);
+	border-left: 2px solid rgb(238, 238, 238);
+	background-color: var(--primary-color);
+	border-right-style: groove;
+	border-left-style: groove;
 	margin: 0 auto;
     height: 100%;
     width: 80%;
@@ -33,10 +38,16 @@ main > div:first-child {
 
 a {
 	outline: 0;
+	color: black;
+}
+
+.icon-links {
+	display: flex;
+    align-items: center;
+	text-decoration: none;
 }
 
 #text-logo {
-	color: initial;
 	text-decoration: none;
 }
 
@@ -70,10 +81,34 @@ a {
 	width: 100%;
 	height: 105px;
 	align-self: flex-end;
+	background-color: var(--secondary-background);
 }
 
 .post {
-	outline: 2px solid red;
+	background: var(--content-background);
+    border-radius: 10px;
+	border: 2px solid;
+	margin: 15px 10px;
+	display: flex;
+	padding: 5px;
+}
+
+.voting-buttons {
+	display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.voting-buttons > span {
+	font-size: x-large;
+}
+
+.voting-buttons > a {
+	transform: scale(.8);
+}
+
+.post-content {
+	flex-grow: 1;
 }
 
 .post-header{
@@ -82,18 +117,26 @@ a {
     padding: 10px;
 }
 
-.post-content h1,
-.post-content h2,
-.post-content h3 {
+.post-body {
+	margin: 0 20px;
+}
+
+.post-body h1,
+.post-body h2,
+.post-body h3 {
 	margin: 0;
 }
 
-#user-profile {
+#user-profile, #subreddit {
 	display: flex;
 }
 
-#user-content {
+#user-content, #subreddit-content {
 	flex-grow: 3;
+}
+
+#user-content > ul, #subreddit-content > ul {
+	padding: 0;
 }
 
 #user-content > div {
@@ -109,6 +152,16 @@ a {
 	text-align: center;
 }
 
-#user-info ul {
+#subreddit-info {
+	flex-grow: .5;
+	text-align: center;
+}
+
+#user-info ul, #subreddit-info ul {
 	list-style: none;
+	padding: 0;
+}
+
+#subreddit-info ul > li {
+	margin: 5px 0;
 }

@@ -1,1 +1,2 @@
-document.getElementById('page-title').innerHTML=document.title
+document.getElementById('page-title').innerHTML=document.title;
+feather.replace();

@@ -1,16 +1,29 @@
+{% load mathfilters %}
 <div class="post">
-	<div></div>
-	<div>
+	<div class="voting-buttons">
+		<a href="/post/{{post.id}}/upvote"><i data-feather="arrow-up"></i></a>
+		<span>{{post.up_votes.count|sub:post.down_votes.count}}</span>
+		<a href="/post/{{post.id}}/downvote"><i data-feather="arrow-down"></i></a>
+	</div>
+	<hr>
+	<div class="post-content">
 		<div class="post-header">
-			<span>r/{{post.subreddit}} | Posted by u/{{post.author}}</span>
-			<a href="#join"><button>Join</button></a>
+			<span>
+				<a href="/subreddit/{{post.subreddit.id}}">
+					<b>r/{{post.subreddit}}</b>
+				</a>
+				| Posted by
+				<a href="/profile/{{post.author.id}}">u/{{post.author}}</a>
+			</span>
 		</div>
 		<hr>
-		<div class="post-content">
-			<h2>{{post.title}}</h2>
+		<div class="post-body">
+			<h2><a href="/post/{{post.id}}/">{{post.title}}</a></h2>
 			<p>{{post.body}}</p>
 		</div>
 		<hr>
-		<div class="post-options"></div>
+		<div class="post-options">
+			<a href="/post/{{post.id}}/#comments" class="icon-links"><i data-feather="message-square"></i> <span>{{comments_count}} Comments</span></a>
+		</div>
 	</div>
 </div>

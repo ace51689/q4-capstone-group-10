@@ -1,4 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse
+from django.contrib.auth.decorators import login_required
+
 from posts.models import Post
 from subreddits.models import Subreddit
 from posts.forms import CreatePostForm, CreateCommentForm
@@ -8,7 +10,7 @@ def post_view(request, id):
     post = Post.objects.get(id=id)
     return render(request, 'post.html', { 'post': post })
 
-
+@login_required
 def create_post_view(request, id):
   subreddit = Subreddit.objects.get(id=id)
 
@@ -31,7 +33,7 @@ def create_post_view(request, id):
 
   return render(request, 'create_post.html', { 'form': form })
 
-
+@login_required
 def create_comment_view(request, id):
   post = Post.objects.get(id=id)
 
@@ -53,6 +55,7 @@ def create_comment_view(request, id):
   return render(request, 'create_post.html', { 'form': form })
 
 # TODO: Add login_required decorator. Stretch: Display conformation or 'are you sure?' message
+@login_required
 def delete_post_view(request, id):
   post_to_delete = Post.objects.get(id=id)
   author = post_to_delete.author
@@ -67,3 +70,28 @@ def delete_post_view(request, id):
     return HttpResponseRedirect(reverse('homepage'))
     
   return HttpResponseRedirect(reverse('post', args=(id)))
+
+
+@login_required
+def upvote_post(request, id):
+  post = Post.objects.get(id=id)
+  if request.user in post.up_votes.all():
+    post.up_votes.remove(request.user)
+  elif request.user in post.down_votes.all():
+    post.down_votes.remove(request.user)
+    post.up_votes.add(request.user)
+  else:
+    post.up_votes.add(request.user)
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required
+def downvote_post(request, id):
+  post = Post.objects.get(id=id)
+  if request.user in post.down_votes.all():
+    post.down_votes.remove(request.user)
+  elif request.user in post.up_votes.all():
+    post.up_votes.remove(request.user)
+    post.down_votes.add(request.user)
+  else:
+    post.down_votes.add(request.user)
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

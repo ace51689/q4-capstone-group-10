@@ -1,31 +1,15 @@
-{% include "navbar.html" %} 
-<h1>r/{{subreddit.name}}</h1>
-
-{% if request.user == subreddit.admin %}
-  <a href="/subreddit/{{subreddit.id}}/add-moderator/">Add Moderator</a>
-  <a href="/subreddit/{{subreddit.id}}/remove-moderator/">Remove Moderator</a>
-  <a href="/subreddit/{{subreddit.id}}/change-admin/">Assign New Admin</a>
-  <a href="/subreddit/{{subreddit.id}}/delete/">Delete Subreddit</a>
-{% endif %}
-
-{% if request.user == subreddit.admin %}
-{% elif request.user in members %}
-  <a href="/subreddit/{{subreddit.id}}/leave/">Leave</a>
-  <a href="/subreddit/{{subreddit.id}}/create-post/">Create Post</a>
-{% elif request.user not in members %}
-  <a href="/subreddit/{{subreddit.id}}/join/">Join</a>
-{% endif %}
-
-<div>Members: {{subreddit.members.count}}</div>
-
-<ul>
-  {% for post in posts %}
-  {% if not post.is_comment %}
-    <li>
-      <h2><a href="/post/{{post.id}}/">{{post.title}}</a></h2>
-      <h4>created by: {{post.author}}</h4>
-      <p>{{post.body}}</p>
-    </li>
-    {% endif %}
-  {% endfor %}
-</ul>
+{% extends "homepage.html" %}
+{% block title %}{{subreddit.name}}{% endblock %}
+{% block content %}
+<div id="subreddit">
+    <div id="subreddit-content">
+		<ul>
+			{% for post in posts %}
+			{% include 'post_template.html' %}
+			{% endfor %}
+		</ul>
+	</div>
+	<hr>
+	{% include 'subreddit_detail_template.html' %}
+</div>
+{% endblock %}

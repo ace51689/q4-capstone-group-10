@@ -67,6 +67,14 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "django-mathfilters"
+version = "1.0.0"
+description = "A set of simple math filters for Django"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "django-mptt"
 version = "0.13.4"
 description = "Utilities for implementing Modified Preorder Tree Traversal with your Django Models and working with trees of Model instances."
@@ -149,7 +157,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "1d9150efd75d500e4a3c3c1e3b594d44d892ddbc89664e618e22e67260a571c0"
+content-hash = "92c155f279eb55e019e42a249c123129258413ee3e3b5da339e13c7e5c29bba3"
 
 [metadata.files]
 asgiref = [
@@ -175,6 +183,10 @@ django-environ = [
 django-js-asset = [
     {file = "django-js-asset-1.2.2.tar.gz", hash = "sha256:c163ae80d2e0b22d8fb598047cd0dcef31f81830e127cfecae278ad574167260"},
     {file = "django_js_asset-1.2.2-py2.py3-none-any.whl", hash = "sha256:8ec12017f26eec524cab436c64ae73033368a372970af4cf42d9354fcb166bdd"},
+]
+django-mathfilters = [
+    {file = "django-mathfilters-1.0.0.tar.gz", hash = "sha256:c9b892ef6dfc893683e75cfd0279c187a601ca68f4684c38f9da44657fb64b07"},
+    {file = "django_mathfilters-1.0.0-py3-none-any.whl", hash = "sha256:64200a21bb249fbf27be601d4bbb788779e09c6e063170c097cd82c4d18ebb83"},
 ]
 django-mptt = [
     {file = "django-mptt-0.13.4.tar.gz", hash = "sha256:80c9fb34df7796a4e5af0cb6b8ade3697555b1aa438bd07a01f32b3ab5202b63"},
