@@ -59,17 +59,14 @@ def create_comment_view(request, id):
 def delete_post_view(request, id):
   post_to_delete = Post.objects.get(id=id)
   author = post_to_delete.author
-  # print(author)
   subreddit_moderators = post_to_delete.subreddit.moderators.all()
   subreddit_admin = post_to_delete.subreddit.admin
-  # print(subreddit_admin)
   user = request.user
   if user == author or user in subreddit_moderators or user == subreddit_admin:
-    # post_to_delete.delete()
-    print('yep')
+    post_to_delete.delete()
     return HttpResponseRedirect(reverse('homepage'))
-    
-  return HttpResponseRedirect(reverse('post', args=(id)))
+ 
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required

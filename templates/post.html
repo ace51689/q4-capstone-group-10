@@ -8,15 +8,14 @@
 <div>
 {% if request.user.is_authenticated and request.user in post.subreddit.members.all%}
 <a href="/post/{{post.id}}/comment/">Leave a Comment</a>
-<<<<<<< HEAD
-{% comment %} {% if request.user == post.author %} {% endcomment %}
-<a href="/post/{{post.id}}/delete/">Delete Post</a>
-{% comment %} {% elif request.user == post.subreddit.admin %} {% endcomment %}
-{% comment %} <a href="/post/{{post.id}}/delete/">Delete Post</a> {% endcomment %}
-{% comment %} {% elif request.user in post.subreddit.moderators %} {% endcomment %}
-{% comment %} <a href="/post/{{post.id}}/delete/">Delete Post</a> {% endcomment %}
-{% comment %} {% endif %} {% endcomment %}
-=======
+{% endif %}
+
+{% if request.user == post.author %}
+  <a href="/post/{{post.id}}/delete/">Delete Post</a>
+{% elif request.user == post.subreddit.admin %}
+  <a href="/post/{{post.id}}/delete/">Delete Post</a>
+{% elif request.user in post.subreddit.moderators.all %}
+  <a href="/post/{{post.id}}/delete/">Delete Post</a>
 {% endif %}
 
 {% if request.user in post.up_votes.all %}
@@ -33,4 +32,3 @@
   <a href="/post/{{post.id}}/downvote/">Downvote</a>
 {% endif %}
 </div>
->>>>>>> main
