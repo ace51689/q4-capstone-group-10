@@ -4,8 +4,11 @@
 <h3>posted on: <a href="/subreddit/{{post.subreddit.id}}/">r/{{post.subreddit}}</a></h3>
 <h4>created by: {{post.author}}</h4>
 <p>{{post.body}}</p>
+
 <div>
+{% if request.user.is_authenticated and request.user in post.subreddit.members.all%}
 <a href="/post/{{post.id}}/comment/">Leave a Comment</a>
+{% endif %}
 
 {% if request.user in post.up_votes.all %}
   <a href="/post/{{post.id}}/upvote/">Remove Upvote</a>

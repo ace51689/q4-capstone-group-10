@@ -1,14 +1,12 @@
 from django.shortcuts import render, reverse, redirect
+from django.contrib.auth.decorators import login_required
 from django.views.generic import View
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.mixins import LoginRequiredMixin
-
 
 from users.models import User
 from users.forms import CreateUserForm, LoginForm
 
 # Create your views here.
-
 class CreateUserView(View):
     template_name = 'signup.html'
     form = CreateUserForm()
@@ -52,6 +50,7 @@ class LoginView(View):
     return render(request, template_name, {"form": form, "header": "Login"})
 
 
+@login_required
 def logout_view(request):
     logout(request)
 

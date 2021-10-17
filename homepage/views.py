@@ -1,9 +1,11 @@
 from django.contrib.auth import get_user_model
-from subreddits.models import Subreddit
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+
+from subreddits.models import Subreddit
 from posts.models import Post
 
-
+@login_required
 def homepage(request):
     context = {'posts': Post.objects.filter(is_comment=False)}
     return render(request, 'homepage.html', context)
