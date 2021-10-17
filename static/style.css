@@ -103,6 +103,10 @@ a {
 	font-size: x-large;
 }
 
+.voting-buttons > .active-button {
+	background-color: var(--accent-color);
+}
+
 .voting-buttons > a {
 	transform: scale(.8);
 }
