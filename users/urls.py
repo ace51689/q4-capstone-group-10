@@ -20,6 +20,6 @@ from users import views
 
 urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
-    path('accounts/login/', views.LoginView.as_view(), name='login'),
+    path('login/', views.LoginView.as_view(), name='login'),
     path("signup/", views.CreateUserView.as_view(), name='signup'),
 ]
