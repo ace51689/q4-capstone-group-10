@@ -11,6 +11,12 @@
 	<link rel="stylesheet" href="{% static 'style.css' %}">
     <script src="{% static 'script.js' %}" defer></script>
 	<script src="https://unpkg.com/feather-icons"></script>
+	<script>
+		let access_token = '{{request.user.access_token}}';
+		let is_premium = '{{is_premium}}';
+	</script>
+	<script src="{% static 'spotify-player.js' %}" defer></script>
+	<script src="https://sdk.scdn.co/spotify-player.js"></script>
 </head>
 <body>
 	<header>
@@ -44,7 +50,9 @@
 		</div>
 		{% endblock content %}
 		<hr>
-        <div id="player"></div>
+        <div id="player">
+			{% include 'player-template.html' %}
+		</div>
 	</main>
 </body>
 </html>

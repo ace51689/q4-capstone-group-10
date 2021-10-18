@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, reverse
+from django.http.response import JsonResponse
 from string import ascii_letters, digits
 from django.contrib import messages
 from urllib.parse import urlencode
@@ -59,5 +60,20 @@ def callback_action(request):
 			return redirect(page_redirect)
 		else:
 			request.user.access_token = token_response.json()['access_token']
+			request.user.refresh_token = token_response.json()['refresh_token']
 			request.user.save()
 			return redirect(page_redirect)
+
+
+def refresh_token(request):
+	token_response = requests.post(
+		'https://accounts.spotify.com/api/token', headers=spot_auth_basic(),
+		data={'grant_type': 'refresh_token', 'refresh_token': request.user.refresh_token}
+	)
+	if token_response.status_code != 400:
+		request.user.access_token = token_response.json()['access_token']
+		request.user.save()
+		return JsonResponse({'success': True})
+	else:
+		return JsonResponse(token_response.json(), status=token_response.status_code)
+
