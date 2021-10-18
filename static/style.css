@@ -23,16 +23,17 @@ main {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+	height: calc(100% - 74px);
 }
 
 main > div:first-child {
 	border-right: 2px solid rgb(238, 238, 238);
 	border-left: 2px solid rgb(238, 238, 238);
 	background-color: var(--primary-color);
+	height: calc(100% - 107px);
 	border-right-style: groove;
 	border-left-style: groove;
 	margin: 0 auto;
-    height: 100%;
     width: 80%;
 }
 
@@ -44,7 +45,10 @@ a {
 .icon-links {
 	display: flex;
     align-items: center;
-	text-decoration: none;
+}
+
+.icon-links > span, .icon-links > a {
+	margin-right: 5px;
 }
 
 #text-logo {
@@ -55,7 +59,10 @@ a {
 	text-transform: capitalize;
 }
 
-#home {
+#home,
+#subreddit,
+#user-profile,
+.comment-options {
 	display: flex;
 }
 
@@ -84,7 +91,31 @@ a {
 	background-color: var(--secondary-background);
 }
 
-.post {
+#comments {
+	margin: 10px;
+}
+
+#comments ul {
+	list-style: none;
+}
+
+.comment {
+	flex-direction: column;
+}
+
+.comment-content > p {
+	margin-left: 10px;
+}
+
+.comment-content h3 {
+	margin: 5px;
+}
+
+.comment-options > * {
+	margin-right: 5px;
+}
+
+.post, .comment {
 	background: var(--content-background);
     border-radius: 10px;
 	border: 2px solid;
@@ -93,17 +124,24 @@ a {
 	padding: 5px;
 }
 
-.voting-buttons {
+.post-voting-buttons {
 	display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-.voting-buttons > span {
+.comment-voting-buttons {
+	display: flex;
+	align-items: center;
+}
+
+.post-voting-buttons > span,
+.comment-voting-buttons > span {
 	font-size: x-large;
 }
 
-.voting-buttons > a {
+.post-voting-buttons > a,
+.comment-voting-buttons > a {
 	transform: scale(.8);
 }
 
@@ -127,12 +165,9 @@ a {
 	margin: 0;
 }
 
-#user-profile, #subreddit {
-	display: flex;
-}
-
 #user-content, #subreddit-content {
 	flex-grow: 3;
+	overflow-y: scroll;
 }
 
 #user-content > ul, #subreddit-content > ul {

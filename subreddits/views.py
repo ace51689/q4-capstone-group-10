@@ -11,9 +11,8 @@ from posts.models import Post
 def subreddit_view(request, id):
   subreddit = Subreddit.objects.get(id=id)
   posts = Post.objects.filter(subreddit=id, is_comment=False)
-  comments_count = Post.objects.filter(subreddit=id, is_comment=True).count
   members = subreddit.members.all()
-  context = { 'subreddit': subreddit, 'posts': posts, 'members': members, 'comments_count': comments_count }
+  context = { 'subreddit': subreddit, 'posts': posts, 'members': members }
   return render(request, 'subreddit.html', context)
 
 class CreateSubredditView(LoginRequiredMixin, View):
