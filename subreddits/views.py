@@ -3,6 +3,7 @@ from django.views.generic import View
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 from subreddits.forms import CreateSubredditForm, AddModeratorForm, RemoveModChangeAdminForm, DeleteSubredditForm
 from subreddits.models import Subreddit
 from posts.models import Post
@@ -24,7 +25,13 @@ class CreateSubredditView(LoginRequiredMixin, View):
 
   def post(self, request):
     form = CreateSubredditForm(request.POST)
-    if form.is_valid():
+    subreddit_name = form.data.get('name')
+    
+    if Subreddit.objects.filter(name=subreddit_name).exists():
+      e = u'Subreddit "r/%s" already exists.' % subreddit_name
+      return render(request, self.template_name, {"form": self.form, "error": e })
+    
+    elif form.is_valid():
       data = form.cleaned_data
       subreddit = Subreddit(
         name=data.get('name'),
@@ -43,7 +50,12 @@ def add_moderator_view(request, id):
 
   if request.method == "POST":
     form = AddModeratorForm(subreddit, request.POST)
-    if form.is_valid():
+    
+    if not form.data.get('moderators', False):
+      e = 'No moderator selected'
+      return render(request, 'signup.html', {"form": AddModeratorForm(subreddit), "error": e })
+    
+    elif form.is_valid():
       data = form.cleaned_data
       moderator_to_add = data.get('moderators')[0]
       subreddit.moderators.add(moderator_to_add)
@@ -60,6 +72,11 @@ def remove_moderator_view(request, id):
 
   if request.method == "POST":
     form = RemoveModChangeAdminForm(subreddit, request.POST)
+
+    if not form.data.get('moderators', False):
+      e = 'No moderator selected'
+      return render(request, 'signup.html', {"form": RemoveModChangeAdminForm(subreddit), "error": e })
+
     if form.is_valid():
       data = form.cleaned_data
       moderator_to_remove = data.get('moderators')[0]
@@ -77,6 +94,11 @@ def change_admin_view(request, id):
 
   if request.method == "POST":
     form = RemoveModChangeAdminForm(subreddit, request.POST)
+
+    if not form.data.get('moderators', False):
+      e = 'No new admin selected.'
+      return render(request, 'signup.html', { "form": RemoveModChangeAdminForm(subreddit), "error": e })
+
     if form.is_valid():
       data = form.cleaned_data
       moderator_to_promote = data.get('moderators')[0]
@@ -108,22 +130,25 @@ def leave_subreddit(request, id):
 
 @login_required
 def delete_subreddit_view(request, id):
+  subreddit_to_delete = Subreddit.objects.get(id=id)
   
   if request.method == "POST":
     form = DeleteSubredditForm(request.POST)
+    
     if form.is_valid():
       data = form.cleaned_data
-      subreddit_to_delete = Subreddit.objects.get(id=id)
       admin = subreddit_to_delete.admin
+      
       if admin.check_password(data.get('password')):
         subreddit_to_delete.delete()
         return HttpResponseRedirect(reverse('homepage'))
       
-      return HttpResponseRedirect(reverse("subreddit", args=(id,)))
+      e = f"The password entered does not match {admin}'s password."
+      return render(request, "delete_subreddit.html", { "form": form, 'subreddit': subreddit_to_delete, "error": e })
 
   form = DeleteSubredditForm()
 
-  return render(request, "delete_subreddit.html", { "form": form })
+  return render(request, "delete_subreddit.html", { "form": form, 'subreddit': subreddit_to_delete })
 
 
 def browse_subreddits_view(request):
