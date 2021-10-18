@@ -42,7 +42,14 @@
 				{% include 'post_template.html' %}
 				{% endfor %}
 			</div>
-            <div id="popular-subreddits"></div>
+			<hr>
+            <div id="popular-subreddits">
+				<h2>Popular Subreddits</h2>
+				<hr>
+				{% for subreddit in popular_subreddits %}
+				{% include 'subreddit_list_template.html' %}
+				{% endfor %}
+			</div>
 		</div>
 		{% endblock content %}
 		<hr>

@@ -76,7 +76,20 @@ a {
 }
 
 #popular-subreddits {
-	flex-grow: 1;
+	width: 332.5px;
+}
+
+#popular-subreddits > .subreddit {
+	justify-content: center;
+}
+
+#popular-subreddits p {
+	display: none;
+}
+
+#music-list > h2,
+#popular-subreddits > h2 {
+	margin: 15px 10px;
 }
 
 #login {
