@@ -48,13 +48,13 @@ def create_comment_view(request, id):
         parent = post
       )
       comment.save()
-      return HttpResponseRedirect(reverse('post', args=(post.id,)))
+      return HttpResponseRedirect(reverse('post', args=([post.get_root().id])))
 
   form = CreateCommentForm()
 
   return render(request, 'create_post.html', { 'form': form })
 
-# TODO: Add login_required decorator. Stretch: Display conformation or 'are you sure?' message
+# TODO: Stretch: Display conformation or 'are you sure?' message
 @login_required
 def delete_post_view(request, id):
   post_to_delete = Post.objects.get(id=id)
