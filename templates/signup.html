@@ -1,5 +1,20 @@
 {% include "navbar.html" %} 
-<form action="" method="post">
-  {% csrf_token %} {{ form.as_p }}
-    <input type="submit" value="Submit" />
-</form>
+<head>
+  <style>
+    .error {
+      color: red
+    }
+  </style>
+</head>
+<body>
+  {% if header %}
+    <h1>{{header}}</h1>
+    {% endif %}
+  <form action="" method="post">
+    {% csrf_token %} {{ form.as_p }}
+      <input type="submit" value="Submit" />
+  </form>
+  {% if error %}
+    <div class="error">{{error}}</div>
+  {% endif %}
+</body>
