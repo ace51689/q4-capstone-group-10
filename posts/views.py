@@ -1,5 +1,6 @@
-from django.shortcuts import render, HttpResponseRedirect, redirect, reverse
-from django.views.generic import View
+from django.shortcuts import render, HttpResponseRedirect, reverse
+from django.contrib.auth.decorators import login_required
+
 from posts.models import Post
 from subreddits.models import Subreddit
 from posts.forms import CreatePostForm, CreateCommentForm
@@ -9,7 +10,7 @@ def post_view(request, id):
     post = Post.objects.get(id=id)
     return render(request, 'post.html', { 'post': post })
 
-
+@login_required
 def create_post_view(request, id):
   subreddit = Subreddit.objects.get(id=id)
 
@@ -32,7 +33,7 @@ def create_post_view(request, id):
 
   return render(request, 'create_post.html', { 'form': form })
 
-
+@login_required
 def create_comment_view(request, id):
   post = Post.objects.get(id=id)
 
@@ -47,13 +48,28 @@ def create_comment_view(request, id):
         parent = post
       )
       comment.save()
-      return HttpResponseRedirect(reverse('post', args=(post.id,)))
+      return HttpResponseRedirect(reverse('post', args=([post.get_root().id])))
 
   form = CreateCommentForm()
 
   return render(request, 'create_post.html', { 'form': form })
 
+# TODO: Stretch: Display conformation or 'are you sure?' message
+@login_required
+def delete_post_view(request, id):
+  post_to_delete = Post.objects.get(id=id)
+  author = post_to_delete.author
+  subreddit_moderators = post_to_delete.subreddit.moderators.all()
+  subreddit_admin = post_to_delete.subreddit.admin
+  user = request.user
+  if user == author or user in subreddit_moderators or user == subreddit_admin:
+    post_to_delete.delete()
+    return HttpResponseRedirect(reverse('homepage'))
+ 
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+
+@login_required
 def upvote_post(request, id):
   post = Post.objects.get(id=id)
   if request.user in post.up_votes.all():
@@ -65,7 +81,7 @@ def upvote_post(request, id):
     post.up_votes.add(request.user)
   return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-
+@login_required
 def downvote_post(request, id):
   post = Post.objects.get(id=id)
   if request.user in post.down_votes.all():

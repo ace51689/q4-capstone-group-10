@@ -1,6 +1,8 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect
 from django.views.generic import View
 from django.db.models import Count
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from subreddits.forms import CreateSubredditForm, AddModeratorForm, RemoveModChangeAdminForm, DeleteSubredditForm
 from subreddits.models import Subreddit
 from posts.models import Post
@@ -8,13 +10,12 @@ from posts.models import Post
 # Create your views here.
 def subreddit_view(request, id):
   subreddit = Subreddit.objects.get(id=id)
-  posts = Post.objects.filter(subreddit=id, is_comment=False)
-  comments_count = Post.objects.filter(subreddit=id, is_comment=True).count
+  posts = Post.objects.filter(subreddit=id, is_comment=False).order_by('-pk')
   members = subreddit.members.all()
-  context = { 'subreddit': subreddit, 'posts': posts, 'members': members, 'comments_count': comments_count }
+  context = { 'subreddit': subreddit, 'posts': posts, 'members': members }
   return render(request, 'subreddit.html', context)
 
-class CreateSubredditView(View):
+class CreateSubredditView(LoginRequiredMixin, View):
   template_name = 'signup.html'
   form = CreateSubredditForm()
 
@@ -36,6 +37,7 @@ class CreateSubredditView(View):
     return render(request, self.template_name, { 'form': self.form })
 
 
+@login_required
 def add_moderator_view(request, id):
   subreddit = Subreddit.objects.get(id=id)
 
@@ -52,6 +54,7 @@ def add_moderator_view(request, id):
   return render(request, "signup.html", { "form": form })
 
 
+@login_required
 def remove_moderator_view(request, id):
   subreddit = Subreddit.objects.get(id=id)
 
@@ -68,6 +71,7 @@ def remove_moderator_view(request, id):
   return render(request, "signup.html", { "form": form })
 
 
+@login_required
 def change_admin_view(request, id):
   subreddit = Subreddit.objects.get(id=id)
 
@@ -86,6 +90,7 @@ def change_admin_view(request, id):
   return render(request, "signup.html", { "form": form })
 
 
+@login_required
 def join_subreddit(request, id):
   subreddit_to_join = Subreddit.objects.get(id=id)
   subreddit_to_join.members.add(request.user)
@@ -93,6 +98,7 @@ def join_subreddit(request, id):
   return HttpResponseRedirect(reverse('subreddit', args=(id,)))
 
 
+@login_required
 def leave_subreddit(request, id):
   subreddit_to_leave = Subreddit.objects.get(id=id)
   subreddit_to_leave.members.remove(request.user)
@@ -100,6 +106,7 @@ def leave_subreddit(request, id):
   return HttpResponseRedirect(reverse('subreddit', args=(id,)))
 
 
+@login_required
 def delete_subreddit_view(request, id):
   
   if request.method == "POST":

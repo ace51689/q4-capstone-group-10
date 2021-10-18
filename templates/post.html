@@ -1,23 +1,29 @@
+{% extends 'homepage.html' %}
 {% load mathfilters %}
-{% include "navbar.html" %} 
-<h2>{{post.title}}</h2>
-<h3>posted on: <a href="/subreddit/{{post.subreddit.id}}/">r/{{post.subreddit}}</a></h3>
-<h4>created by: {{post.author}}</h4>
-<p>{{post.body}}</p>
-<div>
-<a href="/post/{{post.id}}/comment/">Leave a Comment</a>
-
-{% if request.user in post.up_votes.all %}
-  <a href="/post/{{post.id}}/upvote/">Remove Upvote</a>
-{% else %}
-  <a href="/post/{{post.id}}/upvote/">Upvote</a>
-{% endif %}
-
-{{ post.up_votes.count|sub:post.down_votes.count}}
-
-{% if request.user in post.down_votes.all %}
-  <a href="/post/{{post.id}}/downvote/">Remove Downvote</a>
-{% else %}
-  <a href="/post/{{post.id}}/downvote/">Downvote</a>
-{% endif %}
+{% load mptt_tags %}
+{% block title %}{{post.title|title}}{% endblock title %}
+{% block content %}
+<div id="post-container">
+  <div id="post-content">
+    {% include 'post_template.html' %}
+    <hr>
+    <div id="comments">
+      <h2>Comments</h2>
+      <ul>
+        {% recursetree post.get_descendants %}
+        <li>
+          {% include 'comment_template.html' with comment=node %}
+          {% if not node.is_leaf_node %}
+          <ul class="children">
+            {{ children }}
+          </ul>
+          {% endif %}
+        </li>
+        {% endrecursetree %}
+      </ul>
+    </div>
+  </div>
+  <hr>
+  {% include 'subreddit_detail_template.html' with subreddit=post.subreddit %}
 </div>
+{% endblock content %}

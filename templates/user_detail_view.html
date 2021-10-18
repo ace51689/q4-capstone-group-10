@@ -23,11 +23,9 @@
 		<hr>
 		<div>
 			<h2>Comments</h2>
-			<ul>
-				{% for comment in comments %}
-				<li>{{comment}}</li>
-				{% endfor %}
-			</ul>
+			{% for comment in comments %}
+			{% include 'comment_template.html' %}
+			{% endfor %}
 		</div>
 	</div>
 	<hr>
