@@ -1,0 +1,31 @@
+{% load mathfilters %}
+<div class="comment">
+	<div class="comment-content">
+		<a href="/profile/{{comment.author.id}}"><h3>u/{{comment.author}}</h3></a>
+		<hr>
+		<p>{{comment.body}}</p>
+	</div>
+	<hr>
+	<div class="comment-options">
+		<div class="comment-voting-buttons">
+			<a href="/post/{{comment.id}}/upvote"
+			{% if request.user in comment.up_votes.all %}
+			class="active-button"
+			{% endif %}
+			><i data-feather="arrow-up"></i></a>
+			<span>{{comment.up_votes.count|sub:comment.down_votes.count}}</span>
+			<a href="/post/{{comment.id}}/downvote"
+			{% if request.user in comment.up_votes.all %}
+			class="active-button"
+			{% endif %}
+			><i data-feather="arrow-down"></i></a>
+		</div>
+		<span class="icon-links">
+			<i data-feather="message-square"></i>
+			<span>{{comment.get_children|length}}</span>
+			{% if request.user.is_authenticated and request.user in comment.get_root.subreddit.members.all%}
+			<a href="/post/{{comment.id}}/comment/">Reply</a>
+			{% endif %}
+		</span>
+	</div>
+</div>
