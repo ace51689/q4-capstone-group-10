@@ -8,7 +8,6 @@
 	</ul>
 	{% if request.user == user %}
 		<a href="/subreddit/create"><button>Create Subreddit</button></a>
-		<a href="/create_post"><button>Create Post</button></a>
 		<a href="/profile/{{request.user.id}}/settings"><button>Settings</button></a>
 	{% endif %}
 </div>

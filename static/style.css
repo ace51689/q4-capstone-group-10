@@ -164,7 +164,6 @@ a {
 .post-header{
     display: flex;
     justify-content: space-between;
-    padding: 10px;
 }
 
 .post-header, .post-options {
@@ -219,4 +218,14 @@ a {
 
 #subreddit-info ul > li {
 	margin: 5px 0;
+}
+
+.subreddit {
+	display: flex;
+    margin: 10px 50px;
+    padding: 10px 20px;
+	align-items: center;
+    border-radius: 10px;
+    justify-content: space-between;
+    background: var(--content-background);
 }
