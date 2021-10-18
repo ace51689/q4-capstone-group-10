@@ -24,4 +24,5 @@ urlpatterns = [
     path('post/<int:id>/downvote/', views.downvote_post, name='downvote'),
     path('subreddit/<int:id>/create-post/', views.create_post_view, name='create-post'),
     path('post/<int:id>/comment/', views.create_comment_view, name='create-comment'),
+    path('post/<int:id>/delete/', views.delete_post_view, name='delete-post'),
 ]

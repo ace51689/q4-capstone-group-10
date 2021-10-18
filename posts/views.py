@@ -1,6 +1,6 @@
-from django.shortcuts import render, HttpResponseRedirect, redirect, reverse
-from django.views.generic import View
+from django.shortcuts import render, HttpResponseRedirect, reverse
 from django.contrib.auth.decorators import login_required
+
 from posts.models import Post
 from subreddits.models import Subreddit
 from posts.forms import CreatePostForm, CreateCommentForm
@@ -53,6 +53,21 @@ def create_comment_view(request, id):
   form = CreateCommentForm()
 
   return render(request, 'create_post.html', { 'form': form })
+
+# TODO: Add login_required decorator. Stretch: Display conformation or 'are you sure?' message
+@login_required
+def delete_post_view(request, id):
+  post_to_delete = Post.objects.get(id=id)
+  author = post_to_delete.author
+  subreddit_moderators = post_to_delete.subreddit.moderators.all()
+  subreddit_admin = post_to_delete.subreddit.admin
+  user = request.user
+  if user == author or user in subreddit_moderators or user == subreddit_admin:
+    post_to_delete.delete()
+    return HttpResponseRedirect(reverse('homepage'))
+ 
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 @login_required
 def upvote_post(request, id):
