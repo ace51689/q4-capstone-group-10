@@ -10,7 +10,7 @@ from posts.models import Post
 # Create your views here.
 def subreddit_view(request, id):
   subreddit = Subreddit.objects.get(id=id)
-  posts = Post.objects.filter(subreddit=id, is_comment=False)
+  posts = Post.objects.filter(subreddit=id, is_comment=False).order_by('-pk')
   members = subreddit.members.all()
   context = { 'subreddit': subreddit, 'posts': posts, 'members': members }
   return render(request, 'subreddit.html', context)
