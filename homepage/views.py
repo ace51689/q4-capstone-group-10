@@ -1,17 +1,27 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Count
 
 from subreddits.models import Subreddit
 from posts.models import Post
+from spotify.views import get_recently_played
 from users.models import User
 
 @login_required
 def homepage(request):
     popular_subreddits = Subreddit.objects.annotate(total_members=Count('members')).order_by('-total_members')
-    context = {'posts': Post.objects.filter(is_comment=False), 'popular_subreddits': popular_subreddits}
-    return render(request, 'homepage.html', context)
+    posts = Post.objects.filter(is_comment=False)
+    recently_played = get_recently_played(request.user.access_token)
+    if 'error' in recently_played:
+        if recently_played['error']['message'] == 'The access token expired':
+            return redirect('/refresh_token')
+        elif recently_played['error']['message'] == 'Invalid access token':
+            recently_played = {}
+    context = {'posts': posts, 'recently_played': recently_played, 'popular_subreddits': popular_subreddits}
+    response = render(request, 'homepage.html', context)
+    response.set_cookie('theme_choice', request.user.theme_choice)
+    return response
 
 
 def user_detail_view(request, id):

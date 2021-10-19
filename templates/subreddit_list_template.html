@@ -1,4 +1,10 @@
 <div class="subreddit">
-	<h2><a href="/subreddit/{{subreddit.id}}/">r/{{subreddit.name}}</a></h2>
+	<h2><a
+	{% if '/share/' in request.path %}
+	href="/subreddit/{{subreddit.id}}/create-post/?song_link={{uri}}"
+	{% else %}
+	href="/subreddit/{{subreddit.id}}/"
+	{% endif %}
+	>r/{{subreddit.name}}</a></h2>
 	<p>Number of members: {{subreddit.members.count}} Number of posts: {{subreddit.posts.count}}</p>
 </div>

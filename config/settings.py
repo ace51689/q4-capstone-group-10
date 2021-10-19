@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'spotify',
     'django.contrib.staticfiles',
+    'homepage',
     'mptt',
     'users',
     'posts',

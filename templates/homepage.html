@@ -1,4 +1,6 @@
 {% load static %}
+{% load custom_tags %}
+{% static '' as static_root_dir %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +9,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{% block title %}Home{% endblock %}</title>
 	<link rel="stylesheet" href="{% static 'style.css' %}">
-	<link rel="stylesheet" href="{% static 'theme_three.css' %}">
+	<link rel="stylesheet" href="{{static_root_dir}}{{request.user.theme_choice|default_theme:request.COOKIES}}">
     <script src="{% static 'script.js' %}" defer></script>
 	<script src="https://unpkg.com/feather-icons"></script>
+	<script>
+		let access_token = '{{request.user.access_token}}';
+	</script>
 </head>
 <body class="theme-vars">
 	<header>
@@ -36,7 +41,14 @@
 				<a href="/admin"><button>Admin</button></a>
 				<a href="/create_post"><button>Create a Post</button></a>
 			</nav>
-			<div id="music-list"></div>
+			<div id="music-list" {% if not request.user.access_token %} style="display: none;" {% endif %}>
+				<h2>Recently Played<a href="/song/search" style="margin-left: 120px;"><i data-feather="search"></i></a></h2>
+				<hr>
+				{% for item in recently_played.items %}
+				{% include 'song_template.html' with song=item.track %}
+				{% endfor %}
+			</div>
+			<hr>
             <div id="content">
 				{% for post in posts %}
 				{% include 'post_template.html' %}
@@ -53,7 +65,11 @@
 		</div>
 		{% endblock content %}
 		<hr>
-        <div id="player"></div>
+        <div id="player">
+		{% if request.user.last_played_song %}
+			<iframe src="{{request.user.last_played_song}}" width="100%" height="100%" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture;"></iframe>
+		{% endif %}
+		</div>
 	</main>
 </body>
 </html>

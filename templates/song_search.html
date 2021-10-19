@@ -1,0 +1,15 @@
+{% extends 'homepage.html' %}
+{% block title %}Search{% endblock title %}
+{% block content %}
+<div id="search">
+	<form id="query-search-bar">
+		<input type="text" placeholder="Search for a song...">
+		<!-- <input type="submit" value="submit"> -->
+		<button type="submit" class="active-button"><i data-feather="search"></i></button>
+	</form>
+	<hr>
+	{% for song in results %}
+	{% include 'song_template.html' %}
+	{% endfor %}
+</div>
+{% endblock content %}

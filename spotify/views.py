@@ -1,4 +1,5 @@
-from django.shortcuts import redirect, reverse
+from django.shortcuts import render, redirect
+from django.http.response import JsonResponse
 from string import ascii_letters, digits
 from django.contrib import messages
 from urllib.parse import urlencode
@@ -59,5 +60,44 @@ def callback_action(request):
 			return redirect(page_redirect)
 		else:
 			request.user.access_token = token_response.json()['access_token']
+			request.user.refresh_token = token_response.json()['refresh_token']
 			request.user.save()
 			return redirect(page_redirect)
+
+
+def refresh_token(request):
+	token_response = requests.post(
+		'https://accounts.spotify.com/api/token', headers=spot_auth_basic(),
+		data={'grant_type': 'refresh_token', 'refresh_token': request.user.refresh_token}
+	)
+	if token_response.status_code != 400:
+		request.user.access_token = token_response.json()['access_token']
+		request.user.save()
+		return redirect('/')
+	else:
+		return JsonResponse(token_response.json(), status=token_response.status_code)
+
+
+def get_recently_played(access_token):
+	data = requests.get(f'https://api.spotify.com/v1/me/player/recently-played/?access_token={access_token}')
+	return data.json()
+
+
+def play_song(request, uri):
+	request.user.last_played_song = f"https://open.spotify.com/embed/{'/'.join(uri.split(':')[1:])}"
+	request.user.save()
+	return redirect(request.META['HTTP_REFERER'])
+
+
+def share_song(request, uri):
+	subreddits = request.user.subreddits.all()
+	context = {'subreddits': subreddits, 'uri': uri}
+	return render(request, 'browse_subreddits.html', context)
+
+
+def search_song(request):
+	query = request.GET.get('query')
+	results = {'tracks': {'items': []}}
+	if query:
+		results = requests.get(f'https://api.spotify.com/v1/search/?q={query}&type=track&access_token={request.user.access_token}').json()
+	return render(request, 'song_search.html', {'results': results['tracks']['items']})

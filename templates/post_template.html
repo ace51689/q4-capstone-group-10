@@ -1,4 +1,5 @@
 {% load mathfilters %}
+{% load custom_tags %}
 <div class="post">
 	<div class="post-voting-buttons">
 		<a href="/post/{{post.id}}/upvote"
@@ -27,7 +28,10 @@
 		<hr>
 		<div class="post-body">
 			<h2><a href="/post/{{post.id}}/">{{post.title}}</a></h2>
-			<p>{{post.body}}</p>
+			<p>{{post.body|linebreaksbr}}</p>
+			{% if 'spotify:' in post.body %}
+			<iframe src="{{post.body|retrieve_link|uri_to_link}}" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture;"></iframe>
+			{% endif %}
 		</div>
 		<hr>
 		<div class="post-options">
