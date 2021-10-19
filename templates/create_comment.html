@@ -7,7 +7,11 @@
 
 <div id="post-container">
   <div id="post-content">
+    {% if not post.is_comment %}
     {% include 'post_template.html' %}
+    {% else %}
+    {% include 'comment_template.html' with comment=post %}
+    {% endif %}
     <hr>
     <div id="comments">
       <h2>Add a Comment</h2>
