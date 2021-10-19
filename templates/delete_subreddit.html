@@ -1,5 +1,18 @@
-{% include "navbar.html" %} 
+{% extends "homepage.html" %}
+
+{% block title %}Delete Subreddit{% endblock %}
+
+{% block content %}
+<div id='signup'>
+<h2>Delete <a href="/subreddit/{{subreddit.id}}">r/{{subreddit.name}}</a>?</h2>
+<p>Enter your password and click delete to permanently delete r/{{subreddit.name}}</p>
+<p class='error'>This action cannot be reversed! All posts associated with r/{{subreddit.name}} will be removed permenently!</p>
 <form action="" method="post">
   {% csrf_token %} {{ form.as_p }}
     <input type="submit" value="Delete" />
 </form>
+{% if error %}
+  <div class="error">{{error}}</div>
+{% endif %}
+</div>
+{% endblock content %}

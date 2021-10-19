@@ -6,6 +6,8 @@ from django.db.models import Count
 from subreddits.models import Subreddit
 from posts.models import Post
 from spotify.views import get_recently_played
+from users.models import User
+
 
 @login_required
 def homepage(request):
@@ -24,7 +26,9 @@ def homepage(request):
 
 
 def user_detail_view(request, id):
-    user = get_user_model().objects.get(id=id)
+    if not User.objects.filter(id=id).exists():
+        return render(request, '404.html', { "type": "User", "error": f"There is no user with id #{id}." })
+    user = User.objects.get(id=id)
     subreddits = Subreddit.objects.filter(members=user)
     posts = Post.objects.filter(author=user, is_comment=False)
     comments = Post.objects.filter(author=user, is_comment=True)

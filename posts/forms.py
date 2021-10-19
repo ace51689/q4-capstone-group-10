@@ -3,7 +3,7 @@ from django.forms.widgets import Textarea
 
 class CreatePostForm(forms.Form):
   title = forms.CharField(max_length=100)
-  body = forms.CharField(widget=Textarea)
+  body = forms.CharField(widget=Textarea, required=False)
 
 class CreateCommentForm(forms.Form):
   body = forms.CharField(widget=Textarea)
