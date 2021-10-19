@@ -10,3 +10,8 @@ class CreateUserForm(UserCreationForm):
 class LoginForm(forms.Form):
   username = forms.CharField(max_length=50)
   password = forms.CharField(widget=forms.PasswordInput)
+
+class UserSettingsForm(forms.ModelForm):
+  class Meta:
+    model = User
+    fields = ['theme_choice']
