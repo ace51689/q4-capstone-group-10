@@ -3,7 +3,7 @@
 {% block title %}Create Post on {{subreddit.name}}{% endblock %}
 
 {% block content %}
-<div id='signup'>
+<div id='create-post'>
 <h2>Create a post for <a href="/subreddit/{{subreddit.id}}/">r/{{subreddit.name}}</a></h2>
 <form action="" method="post">
   {% csrf_token %} {{ form.as_p }}
