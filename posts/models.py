@@ -1,5 +1,6 @@
 from mptt.models import MPTTModel, TreeForeignKey
 from django.db import models
+from django.utils import timezone
 
 
 class Post(MPTTModel):
@@ -11,6 +12,7 @@ class Post(MPTTModel):
 	down_votes = models.ManyToManyField('users.User', symmetrical=False, blank=True, related_name='post_down_votes')
 	subreddit = models.ForeignKey('subreddits.Subreddit', on_delete=models.CASCADE, null=True, blank=True)
 	parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+	created_at = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
 		return self.title or self.body

@@ -63,6 +63,7 @@ a {
 #user-profile,
 #post-container,
 #query-search-bar,
+#user-profile-settings,
 .comment-options {
 	display: flex;
 }
@@ -243,6 +244,7 @@ a {
 
 .post-content {
 	flex-grow: 1;
+	overflow: hidden;
 }
 
 .post-header{
@@ -268,7 +270,10 @@ a {
 	margin: 0;
 }
 
-#user-content, #subreddit-content, #post-content {
+#user-content,
+#subreddit-content,
+#post-content,
+#user-settings {
 	flex-grow: 3;
 	overflow-y: scroll;
 }
@@ -288,6 +293,10 @@ a {
 #user-info {
 	flex-grow: .5;
 	text-align: center;
+}
+
+#user-settings > div {
+	padding: 20px;
 }
 
 #subreddit-info {

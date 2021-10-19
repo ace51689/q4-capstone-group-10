@@ -23,6 +23,8 @@
 				</a>
 				| Posted by
 				<a href="/profile/{{post.author.id}}">u/{{post.author}}</a>
+				|
+				<span>{{post.created_at}}</span>
 			</span>
 		</div>
 		<hr>
@@ -37,7 +39,7 @@
 		<div class="post-options">
 			<span class="icon-links">
 				<i data-feather="message-square"></i>
-				<span>{{post.get_descendants|length}} Comments</span>
+				<span>{{post.get_descendants|length}}</span>
 				{% if request.user.is_authenticated and request.user in post.subreddit.members.all%}
 				<a href="/post/{{post.id}}/comment/">Leave a Comment</a>
 				{% endif %}

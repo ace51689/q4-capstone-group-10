@@ -1,0 +1,25 @@
+{% extends 'homepage.html' %}
+{% block title %}Settings{% endblock title %}
+{% block content %}
+<div id="user-profile-settings">
+	<div id="user-settings">
+		<div>
+			<h1>Settings</h1>
+			<form action="" method="post">
+				{% csrf_token %} {{ form.as_p }}
+				<input type="submit" value="Submit" />
+			</form>
+		</div>
+		<hr>
+		<div>
+			<h1>Password change</h1>
+			<form action="" method="post">
+				{% csrf_token %} {{pass_change.as_p}}
+				<input type="submit" value="Submit">
+			</form>
+		</div>
+		<hr>
+	</div>
+	{% include 'user_detail_template.html' %}
+</div>
+{% endblock content %}
