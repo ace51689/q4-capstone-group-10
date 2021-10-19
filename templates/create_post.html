@@ -1,5 +1,11 @@
-{% include "navbar.html" %} 
-<form action="" method="post">
-  {% csrf_token %} {{ form.as_p }}
-    <input type="submit" value="Submit" />
-</form>
+{% extends "homepage.html" %}
+{% block title %}Create post{% endblock title %}
+{% block content %}
+<div id="create-post">
+	<h1>Create Post</h1>
+	<form action="" method="post">
+		{% csrf_token %} {{ form.as_p }}
+		<input type="submit" value="Submit" />
+	</form>
+</div>
+{% endblock content %}

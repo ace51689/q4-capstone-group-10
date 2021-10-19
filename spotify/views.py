@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, reverse
+from django.shortcuts import render, redirect
 from django.http.response import JsonResponse
 from string import ascii_letters, digits
 from django.contrib import messages
@@ -87,3 +87,9 @@ def play_song(request, uri):
 	request.user.last_played_song = f"https://open.spotify.com/embed/{'/'.join(uri.split(':')[1:])}"
 	request.user.save()
 	return redirect(request.META['HTTP_REFERER'])
+
+
+def share_song(request, uri):
+	subreddits = request.user.subreddits.all()
+	context = {'subreddits': subreddits, 'uri': uri}
+	return render(request, 'browse_subreddits.html', context)

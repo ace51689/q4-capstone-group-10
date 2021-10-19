@@ -10,7 +10,7 @@ class RedditUserAdmin(UserAdmin):
 	list_display = ['username', 'is_staff', 'is_premium']
 	UserAdmin.fieldsets[0][1]['fields'] += (
 		'access_token', 'refresh_token', 'is_premium',
-		'last_played_song', 'theme_choice'
+		'last_played_song', 'theme_choice', 'subreddits'
 	)
 
 

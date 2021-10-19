@@ -1,7 +1,12 @@
 {% extends "homepage.html" %}
+{% load custom_tags %}
 {% block title %}Subreddits{% endblock %}
 {% block content %}
 <div id="subreddit-list">
+	{% if '/share/' in request.path %}
+		<h2 style="text-align: center;">Pick Subreddit to share to</h2>
+		<iframe src="{{uri|uri_to_link}}" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture;"></iframe>
+	{% endif %}
 	{% for subreddit in subreddits %}
 	{% include 'subreddit_list_template.html' %}
 	{% endfor %}
