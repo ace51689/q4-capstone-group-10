@@ -90,7 +90,7 @@ def delete_post_view(request, id):
       return HttpResponseRedirect(reverse('post', args=([post_to_delete.get_root().id])))
     
     post_to_delete.delete()
-    return HttpResponseRedirect((request.META.get('HTTP_REFERER')))
+    return HttpResponseRedirect(reverse('subreddit', args=(post_to_delete.subreddit.id,)))
  
   e = "You do not have privileges to delete this post."
   return render(request, 'post.html', { "post": post_to_delete, "error": e })
