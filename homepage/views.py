@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 from django.shortcuts import render, redirect
 from django.db.models import Count
 
@@ -7,6 +9,7 @@ from subreddits.models import Subreddit
 from posts.models import Post
 from spotify.views import get_recently_played
 from users.models import User
+from users.forms import UserSettingsForm
 
 @login_required
 def homepage(request):
@@ -33,3 +36,23 @@ def user_detail_view(request, id):
     comments = Post.objects.filter(author=user, is_comment=True)
     context = {'user': user, 'subreddits': subreddits, 'posts': posts, 'comments': comments}
     return render(request, 'user_detail_view.html', context)
+
+
+def user_settings_view(request, id):
+    user = User.objects.get(id=id)
+    if request.method == "POST":
+        form = UserSettingsForm(request.POST)
+        pass_change = PasswordChangeForm(user, request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user.theme_choice = data['theme_choice']
+            user.save()
+            return redirect(f'/profile/{user.id}')
+        if pass_change.is_valid():
+            saved_user = pass_change.save()
+            update_session_auth_hash(request, saved_user)
+            return redirect('/')
+    form = UserSettingsForm(instance=user)
+    pass_change = PasswordChangeForm(user)
+    context = {'form': form, 'pass_change': pass_change}
+    return render(request, 'user_settings_view.html', context)

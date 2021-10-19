@@ -5,7 +5,7 @@
 	<h1>Create Subreddit</h1>
 	<form action="" method="post">
 	{% csrf_token %} {{ form.as_p }}
-	<input type="submit" value="Create" />
+	<input type="submit" value="Create Subreddit" />
 	</form>
 	{% if error %}
 		<div class="error">{{error}}</div>

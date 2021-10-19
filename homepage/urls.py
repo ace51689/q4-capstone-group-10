@@ -21,4 +21,5 @@ from homepage import views
 urlpatterns = [
     path('', views.homepage, name='homepage'),
     path('profile/<int:id>/', views.user_detail_view, name='profile'),
+    path('profile/<int:id>/settings', views.user_settings_view, name='profile_settings'),
 ]
