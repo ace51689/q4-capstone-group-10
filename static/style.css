@@ -92,7 +92,7 @@ a {
 	margin: 15px 10px;
 }
 
-#login {
+#login, #signup {
 	margin: auto;
 	display: flex;
 	overflow: hidden;
@@ -100,8 +100,17 @@ a {
 	flex-direction: column;
 }
 
-#login > a {
+#login > a,
+#signup > a {
 	margin: 10px 20px;
+}
+
+#signup .helptext {
+	display: block;
+}
+
+#signup ul {
+	list-style: none;
 }
 
 #player {
