@@ -51,6 +51,7 @@ def user_settings_view(request, id):
         if pass_change.is_valid():
             saved_user = pass_change.save()
             update_session_auth_hash(request, saved_user)
+            return redirect('/')
     form = UserSettingsForm(instance=user)
     pass_change = PasswordChangeForm(user)
     context = {'form': form, 'pass_change': pass_change}
