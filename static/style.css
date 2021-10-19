@@ -329,3 +329,7 @@ a {
 	border-radius: 5px;
 	background: var(--accent-color);
 }
+
+.error {
+	color: red
+}

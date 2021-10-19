@@ -1,12 +1,14 @@
 {% extends "homepage.html" %}
-{% block title %}Sign up{% endblock %}
-{% block content %}
 
+{% block title %}Add Moderator{% endblock %}
+
+{% block content %}
 <div id="signup">
-  <h1>Sign up</h1>
+    <h1>Add Moderator</h1>
+
   <form action="" method="post">
     {% csrf_token %} {{ form.as_p }}
-    <input type="submit" value="Sign Up" />
+    <input type="submit" value="Add Moderator" />
   </form>
  {% if error %}
     <div class="error">{{error}}</div>

@@ -1,0 +1,19 @@
+{% extends "homepage.html" %}
+
+{% block title %}Transfer Admin{% endblock %}
+
+{% block content %}
+
+<div id="signup">
+    <h1>Transfer Admin</h1>
+
+  <form action="" method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <p class="error"><strong>Warning!</strong> This action cannot be undone. Only transfer admin privileges if you are absolutely sure.</p>
+    <input type="submit" value="Transfer Admin" />
+  </form>
+ {% if error %}
+    <div class="error">{{error}}</div>
+  {% endif %}
+</div>
+{% endblock content %}

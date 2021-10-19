@@ -1,11 +1,17 @@
 {% extends "homepage.html" %}
-{% block title %}Create post{% endblock title %}
+
+{% block title %}Create Post on {{subreddit.name}}{% endblock %}
+
 {% block content %}
-<div id="create-post">
-	<h1>Create Post</h1>
-	<form action="" method="post">
-		{% csrf_token %} {{ form.as_p }}
-		<input type="submit" value="Submit" />
-	</form>
+<div id='signup'>
+<h2>Create a post for <a href="/subreddit/{{subreddit.id}}/">r/{{subreddit.name}}</a></h2>
+<form action="" method="post">
+  {% csrf_token %} {{ form.as_p }}
+    <input type="submit" value="Submit" />
+</form>
+{% if error %}
+  <div class="error">{{error}}</div>
+{% endif %}
+
 </div>
 {% endblock content %}

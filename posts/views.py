@@ -7,16 +7,26 @@ from posts.forms import CreatePostForm, CreateCommentForm
 
 # Create your views here.
 def post_view(request, id):
+    if not Post.objects.filter(id=id).exists():
+      return render(request, '404.html', { "type": "Post", "error": f"There is no post with id #{id}." })
     post = Post.objects.get(id=id)
     return render(request, 'post.html', { 'post': post })
 
 @login_required
 def create_post_view(request, id):
+  if not Subreddit.objects.filter(id=id).exists():
+    return render(request, '404.html', { "type": "Subreddit", "error": f"There is no subreddit with id #{id}." })
+  
   subreddit = Subreddit.objects.get(id=id)
 
   if request.method == 'POST':
     form = CreatePostForm(request.POST)
-    if form.is_valid():
+
+    if request.user not in subreddit.members.all():
+      e = f"Logged in user not a member of r/{subreddit.name}."
+      return render(request, 'create_post.html', { 'form': CreatePostForm(), 'subreddit': subreddit, "error": e })
+    
+    elif form.is_valid():
       data = form.cleaned_data
       post = Post(
         title = data.get('title'),
@@ -31,15 +41,23 @@ def create_post_view(request, id):
 
   form = CreatePostForm()
 
-  return render(request, 'create_post.html', { 'form': form })
+  return render(request, 'create_post.html', { 'form': form, 'subreddit': subreddit })
 
 @login_required
 def create_comment_view(request, id):
+  if not Post.objects.filter(id=id).exists():
+      return render(request, '404.html', { "type": "Post", "error": f"There is no post with id #{id}." })
   post = Post.objects.get(id=id)
+  subreddit = post.subreddit
 
   if request.method == 'POST':
     form = CreateCommentForm(request.POST)
-    if form.is_valid():
+    
+    if request.user not in subreddit.members.all():
+      e = f"Logged in user not a member of r/{subreddit.name}."
+      return render(request, 'create_comment.html', { 'form': CreateCommentForm(), 'post': post, 'subreddit': subreddit, "error": e })
+    
+    elif form.is_valid():
       data = form.cleaned_data
       comment = Post(
         body = data.get('body'),
@@ -52,11 +70,13 @@ def create_comment_view(request, id):
 
   form = CreateCommentForm()
 
-  return render(request, 'create_post.html', { 'form': form })
+  return render(request, 'create_comment.html', { 'form': form, 'subreddit': subreddit, 'post': post })
 
 # TODO: Stretch: Display conformation or 'are you sure?' message
 @login_required
 def delete_post_view(request, id):
+  if not Post.objects.filter(id=id).exists():
+      return render(request, '404.html', { "type": "Post", "error": f"There is no post with id #{id}." })
   post_to_delete = Post.objects.get(id=id)
   author = post_to_delete.author
   subreddit_moderators = post_to_delete.subreddit.moderators.all()
@@ -66,11 +86,14 @@ def delete_post_view(request, id):
     post_to_delete.delete()
     return HttpResponseRedirect(reverse('homepage'))
  
-  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+  e = "You do not have privileges to delete this post."
+  return render(request, 'post.html', { "post": post_to_delete, "error": e })
 
 
 @login_required
 def upvote_post(request, id):
+  if not Post.objects.filter(id=id).exists():
+      return render(request, '404.html', { "type": "Post", "error": f"There is no post with id #{id}." })
   post = Post.objects.get(id=id)
   if request.user in post.up_votes.all():
     post.up_votes.remove(request.user)
@@ -83,6 +106,8 @@ def upvote_post(request, id):
 
 @login_required
 def downvote_post(request, id):
+  if not Post.objects.filter(id=id).exists():
+      return render(request, '404.html', { "type": "Post", "error": f"There is no post with id #{id}." })
   post = Post.objects.get(id=id)
   if request.user in post.down_votes.all():
     post.down_votes.remove(request.user)
