@@ -12,8 +12,11 @@ def homepage(request):
     popular_subreddits = Subreddit.objects.annotate(total_members=Count('members')).order_by('-total_members')
     posts = Post.objects.filter(is_comment=False)
     recently_played = get_recently_played(request.user.access_token)
-    if 'error' in recently_played and recently_played['error']['message'] == 'The access token expired':
-        return redirect('/refresh_token')
+    if 'error' in recently_played:
+        if recently_played['error']['message'] == 'The access token expired':
+            return redirect('/refresh_token')
+        elif recently_played['error']['message'] == 'Invalid access token':
+            recently_played = {}
     context = {'posts': posts, 'recently_played': recently_played, 'popular_subreddits': popular_subreddits}
     response = render(request, 'homepage.html', context)
     response.set_cookie('theme_choice', request.user.theme_choice)

@@ -41,7 +41,7 @@
 				<a href="/admin"><button>Admin</button></a>
 				<a href="/create_post"><button>Create a Post</button></a>
 			</nav>
-			<div id="music-list">
+			<div id="music-list" {% if not request.user.access_token %} style="display: none;" {% endif %}>
 				<h2>Recently Played<a href="/song/search" style="margin-left: 120px;"><i data-feather="search"></i></a></h2>
 				<hr>
 				{% for item in recently_played.items %}

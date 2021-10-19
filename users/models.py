@@ -7,8 +7,8 @@ class User(AbstractUser):
 	subreddits = models.ManyToManyField(
 		'subreddits.Subreddit', symmetrical=False, blank=True, related_name='users_subreddits'
 	)
-	access_token = models.TextField()
-	refresh_token = models.TextField()
+	access_token = models.TextField(null=True, blank=True)
+	refresh_token = models.TextField(null=True, blank=True)
 	is_premium = models.BooleanField(default=False)
 	last_played_song = models.URLField(null=True, blank=True)
 	theme_choice = models.CharField(
