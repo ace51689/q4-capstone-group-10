@@ -30,6 +30,13 @@
 			<li><a href="/subreddit/{{subreddit.id}}/change-admin/"><button>Assign New Admin</button></a></li>
 			<li><a href="/subreddit/{{subreddit.id}}/delete/"><button>Delete Subreddit</button></a></li>
 		
+		{% elif request.user == subreddit.admin %}
+			<li><a href="/subreddit/{{subreddit.id}}/create-post/"><button>Create Post</button></a></li>
+			<li><a href="/subreddit/{{subreddit.id}}/add-moderator/"><button>Add Moderator</button></a></li>
+			<li><a href="/subreddit/{{subreddit.id}}/remove-moderator/"><button>Remove Moderator</button></a></li>
+			<li><a href="/subreddit/{{subreddit.id}}/change-admin/"><button>Assign New Admin</button></a></li>
+			<li><a href="/subreddit/{{subreddit.id}}/delete/"><button>Delete Subreddit</button></a></li>
+		
 		{% elif request.user in members %}
 			<li><a href="/subreddit/{{subreddit.id}}/leave/"><button>Leave</button></a></li>
 			<li><a href="/subreddit/{{subreddit.id}}/create-post/"><button>Create Post</button></a></li>

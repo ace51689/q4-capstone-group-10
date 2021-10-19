@@ -9,7 +9,7 @@
 			<h2>Subreddits</h2>
 			<ul>
 				{% for subreddit in subreddits %}
-				<li>{{subreddit}}</li>
+				<li><a href="/subreddit/{{subreddit.id}}/">r/{{subreddit}}</a></li>
 				{% endfor %}
 			</ul>
 		</div>

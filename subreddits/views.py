@@ -55,6 +55,9 @@ def add_moderator_view(request, id):
   
   subreddit = Subreddit.objects.get(id=id)
 
+  if request.user != subreddit.admin:
+    return render(request, '404.html', { "type": "Privileges", "error": f"You are not the admin of this subreddit." })
+
   if request.method == "POST":
     form = AddModeratorForm(subreddit, request.POST)
     
@@ -80,6 +83,9 @@ def remove_moderator_view(request, id):
   
   subreddit = Subreddit.objects.get(id=id)
 
+  if request.user != subreddit.admin:
+    return render(request, '404.html', { "type": "Privileges", "error": f"You are not the admin of this subreddit." })
+
   if request.method == "POST":
     form = RemoveModChangeAdminForm(subreddit, request.POST)
 
@@ -104,6 +110,9 @@ def change_admin_view(request, id):
     return render(request, '404.html', { "type": "Subreddit", "error": f"There is no subreddit with id #{id}." })
   
   subreddit = Subreddit.objects.get(id=id)
+
+  if request.user != subreddit.admin:
+    return render(request, '404.html', { "type": "Privileges", "error": f"You are not the admin of this subreddit." })
 
   if request.method == "POST":
     form = RemoveModChangeAdminForm(subreddit, request.POST)
