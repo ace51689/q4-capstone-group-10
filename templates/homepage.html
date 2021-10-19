@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_tags %}
 {% static '' as static_root_dir %}
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{% block title %}Home{% endblock %}</title>
 	<link rel="stylesheet" href="{% static 'style.css' %}">
-	<link rel="stylesheet" href="{{static_root_dir}}{{request.user.theme_choice}}">
+	<link rel="stylesheet" href="{{static_root_dir}}{{request.user.theme_choice|default_theme:request.COOKIES}}">
     <script src="{% static 'script.js' %}" defer></script>
 	<script src="https://unpkg.com/feather-icons"></script>
 	<script>

@@ -15,7 +15,9 @@ def homepage(request):
     if 'error' in recently_played and recently_played['error']['message'] == 'The access token expired':
         return redirect('/refresh_token')
     context = {'posts': posts, 'recently_played': recently_played, 'popular_subreddits': popular_subreddits}
-    return render(request, 'homepage.html', context)
+    response = render(request, 'homepage.html', context)
+    response.set_cookie('theme_choice', request.user.theme_choice)
+    return response
 
 
 def user_detail_view(request, id):
