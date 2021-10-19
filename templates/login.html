@@ -1,20 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-  </head>
-  <body>
-    {% include "navbar.html" %} 
-    {% if header %}
-    <h1>{{header}}</h1>
-    {% endif %}
-
-    <form action="" method="post">
-      {% csrf_token %} {{ form.as_p }}
-      <input type="submit" value="Submit" />
-    </form>
-  </body>
-</html>
+{% extends 'homepage.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div id="login">
+	<h1>Login</h1>
+	<form action="" method="post">
+		{% csrf_token %} {{ form.as_p }}
+		<input type="submit" value="Login" />
+	</form>
+	<a href="/signup"><button>Sign up</button></a>
+</div>
+{% endblock content %}

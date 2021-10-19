@@ -94,8 +94,14 @@ a {
 
 #login {
 	margin: auto;
-    width: fit-content;
-    padding: 10px 20px;
+	display: flex;
+	overflow: hidden;
+	text-align: center;
+	flex-direction: column;
+}
+
+#login > a {
+	margin: 10px 20px;
 }
 
 #player {
