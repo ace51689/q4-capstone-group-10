@@ -49,20 +49,22 @@ def create_comment_view(request, id):
       return render(request, '404.html', { "type": "Post", "error": f"There is no post with id #{id}." })
   post = Post.objects.get(id=id)
   subreddit = post.subreddit
+  root_post = post.get_root()
 
   if request.method == 'POST':
     form = CreateCommentForm(request.POST)
     
     if request.user not in subreddit.members.all():
       e = f"Logged in user not a member of r/{subreddit.name}."
-      return render(request, 'create_comment.html', { 'form': CreateCommentForm(), 'post': post, 'subreddit': subreddit, "error": e })
+      return render(request, 'create_comment.html', { 'form': CreateCommentForm(), 'post': post, 'subreddit': subreddit, "root_post": root_post, "error": e })
     
-    elif form.is_valid():
+    if form.is_valid():
       data = form.cleaned_data
       comment = Post(
         body = data.get('body'),
         is_comment = True,
         author = request.user,
+        subreddit = subreddit,
         parent = post
       )
       comment.save()
@@ -70,7 +72,7 @@ def create_comment_view(request, id):
 
   form = CreateCommentForm()
 
-  return render(request, 'create_comment.html', { 'form': form, 'subreddit': subreddit, 'post': post })
+  return render(request, 'create_comment.html', { 'form': form, "subreddit": subreddit, 'post': post, "root_post": root_post })
 
 # TODO: Stretch: Display conformation or 'are you sure?' message
 @login_required
@@ -83,8 +85,12 @@ def delete_post_view(request, id):
   subreddit_admin = post_to_delete.subreddit.admin
   user = request.user
   if user == author or user in subreddit_moderators or user == subreddit_admin:
+    if post_to_delete.is_comment:
+      post_to_delete.delete()
+      return HttpResponseRedirect(reverse('post', args=([post_to_delete.get_root().id])))
+    
     post_to_delete.delete()
-    return HttpResponseRedirect(reverse('homepage'))
+    return HttpResponseRedirect((request.META.get('HTTP_REFERER')))
  
   e = "You do not have privileges to delete this post."
   return render(request, 'post.html', { "post": post_to_delete, "error": e })

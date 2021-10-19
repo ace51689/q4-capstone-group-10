@@ -1,0 +1,17 @@
+{% extends "homepage.html" %}
+
+{% block title %}Create a Subreddit{% endblock %}
+
+{% block content %}
+<div id='signup'>
+<h2>Create a Subreddit</h2>
+<form action="" method="post">
+  {% csrf_token %} {{ form.as_p }}
+    <input type="submit" value="Submit" />
+</form>
+{% if error %}
+  <div class="error">{{error}}</div>
+{% endif %}
+
+</div>
+{% endblock content %}

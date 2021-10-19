@@ -23,7 +23,10 @@
 		<span class="icon-links">
 			<i data-feather="message-square"></i>
 			<span>{{comment.get_children|length}}</span>
-			{% if request.user.is_authenticated and request.user in comment.get_root.subreddit.members.all%}
+			{% if request.user.is_authenticated and request.user == comment.author or request.user == subreddit.admin or request.user in subreddit.moderators %}
+			<a href="/post/{{comment.id}}/comment/">Reply</a>
+			<a href="/post/{{comment.id}}/delete/">Delete Comment</a>
+			{% elif request.user.is_authenticated and request.user in comment.get_root.subreddit.members.all%}
 			<a href="/post/{{comment.id}}/comment/">Reply</a>
 			{% endif %}
 		</span>

@@ -20,7 +20,7 @@ def subreddit_view(request, id):
   return render(request, 'subreddit.html', context)
 
 class CreateSubredditView(LoginRequiredMixin, View):
-  template_name = 'signup.html'
+  template_name = 'create_subreddit.html'
   form = CreateSubredditForm()
 
   def get(self, request):

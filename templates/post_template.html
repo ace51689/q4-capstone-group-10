@@ -23,11 +23,16 @@
 				</a>
 				| Posted by
 				<a href="/profile/{{post.author.id}}">u/{{post.author}}</a>
+				{% if post.is_comment %}
+					on post: <b>{{root_post.title}}</b>
+				{% endif %}
 			</span>
 		</div>
 		<hr>
 		<div class="post-body">
+			{% if not post.is_comment %}
 			<h2><a href="/post/{{post.id}}/">{{post.title}}</a></h2>
+			{% endif %}
 			<p>{{post.body|linebreaksbr}}</p>
 			{% if 'spotify:' in post.body %}
 			<iframe src="{{post.body|retrieve_link|uri_to_link}}" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture;"></iframe>
@@ -38,7 +43,10 @@
 			<span class="icon-links">
 				<i data-feather="message-square"></i>
 				<span>{{post.get_descendants|length}} Comments</span>
-				{% if request.user.is_authenticated and request.user in post.subreddit.members.all%}
+				{% if request.user.is_authenticated and request.user == post.subreddit.admin or request.user == post.author or request.user in post.subreddit.moderators.all %}
+				<a href="/post/{{post.id}}/comment/">Leave a Comment</a>
+				<a href="/post/{{post.id}}/delete/">Delete Post</a>
+				{% elif request.user.is_authenticated and request.user in post.subreddit.members.all%}
 				<a href="/post/{{post.id}}/comment/">Leave a Comment</a>
 				{% endif %}
 			</span>
