@@ -1,5 +1,17 @@
 {% include "navbar.html" %} 
+<head>
+  <style>
+    .error {
+      color: red
+    }
+  </style>
+</head>
+
+<h2>Create a post for <a href="/subreddit/{{subreddit.id}}/">r/{{subreddit.name}}</a></h2>
 <form action="" method="post">
   {% csrf_token %} {{ form.as_p }}
     <input type="submit" value="Submit" />
 </form>
+{% if error %}
+  <div class="error">{{error}}</div>
+{% endif %}

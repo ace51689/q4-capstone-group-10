@@ -16,7 +16,12 @@ def create_post_view(request, id):
 
   if request.method == 'POST':
     form = CreatePostForm(request.POST)
-    if form.is_valid():
+
+    if request.user not in subreddit.members.all():
+      e = f"Logged in user not a member of r/{subreddit.name}."
+      return render(request, 'create_post.html', { 'form': CreatePostForm(), 'subreddit': subreddit, "error": e })
+    
+    elif form.is_valid():
       data = form.cleaned_data
       post = Post(
         title = data.get('title'),
@@ -31,7 +36,7 @@ def create_post_view(request, id):
 
   form = CreatePostForm()
 
-  return render(request, 'create_post.html', { 'form': form })
+  return render(request, 'create_post.html', { 'form': form, 'subreddit': subreddit })
 
 @login_required
 def create_comment_view(request, id):
@@ -39,7 +44,12 @@ def create_comment_view(request, id):
 
   if request.method == 'POST':
     form = CreateCommentForm(request.POST)
-    if form.is_valid():
+    if request.user not in post.subreddit.members.all():
+      e = f"Logged in user not a member of r/{post.subreddit.name}."
+      context = { 'form': form, 'subreddit': post.subreddit, 'post': post }
+      return render(request, 'create_post.html', context)
+    
+    elif form.is_valid():
       data = form.cleaned_data
       comment = Post(
         body = data.get('body'),
@@ -52,7 +62,7 @@ def create_comment_view(request, id):
 
   form = CreateCommentForm()
 
-  return render(request, 'create_post.html', { 'form': form })
+  return render(request, 'create_post.html', { 'form': form, 'subreddit': post.subreddit, 'post': post })
 
 # TODO: Stretch: Display conformation or 'are you sure?' message
 @login_required
