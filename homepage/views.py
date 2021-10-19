@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Count
 
 from subreddits.models import Subreddit
@@ -12,6 +12,8 @@ def homepage(request):
     popular_subreddits = Subreddit.objects.annotate(total_members=Count('members')).order_by('-total_members')
     posts = Post.objects.filter(is_comment=False)
     recently_played = get_recently_played(request.user.access_token)
+    if 'error' in recently_played and recently_played['error']['message'] == 'The access token expired':
+        return redirect('/refresh_token')
     context = {'posts': posts, 'recently_played': recently_played, 'popular_subreddits': popular_subreddits}
     return render(request, 'homepage.html', context)
 

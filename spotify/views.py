@@ -73,7 +73,7 @@ def refresh_token(request):
 	if token_response.status_code != 400:
 		request.user.access_token = token_response.json()['access_token']
 		request.user.save()
-		return JsonResponse({'success': True})
+		return redirect('/')
 	else:
 		return JsonResponse(token_response.json(), status=token_response.status_code)
 
@@ -81,3 +81,9 @@ def refresh_token(request):
 def get_recently_played(access_token):
 	data = requests.get(f'https://api.spotify.com/v1/me/player/recently-played/?access_token={access_token}')
 	return data.json()
+
+
+def play_song(request, uri):
+	request.user.last_played_song = f"https://open.spotify.com/embed/{'/'.join(uri.split(':')[1:])}"
+	request.user.save()
+	return redirect(request.META['HTTP_REFERER'])
