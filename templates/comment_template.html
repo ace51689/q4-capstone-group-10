@@ -1,7 +1,7 @@
 {% load mathfilters %}
 <div class="comment">
 	<div class="comment-content">
-		<a href="/profile/{{comment.author.id}}"><h3>u/{{comment.author}}</h3></a>
+		<a href="/profile/{{comment.author.id}}"><h3>u/{{comment.author}} | <span style="font-weight: 100; font-size: 14px;">{{comment.created_at}}</span></h3></a>
 		<hr>
 		<p>{{comment.body}}</p>
 	</div>
