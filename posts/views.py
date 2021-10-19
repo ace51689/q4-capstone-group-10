@@ -48,7 +48,7 @@ def create_comment_view(request, id):
   if not Post.objects.filter(id=id).exists():
       return render(request, '404.html', { "type": "Post", "error": f"There is no post with id #{id}." })
   post = Post.objects.get(id=id)
-  subreddit = post.subreddit
+  subreddit = post.get_root().subreddit
 
   if request.method == 'POST':
     form = CreateCommentForm(request.POST)
