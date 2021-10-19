@@ -12,11 +12,21 @@ class CreateUserView(View):
     form = CreateUserForm()
 
     def get(self, request):
-        return render(request, self.template_name, { "form": self.form })
+        return render(request, self.template_name, { "form": self.form, "header": "Signup" })
 
     def post(self, request):
         form = CreateUserForm(request.POST)
-        if form.is_valid():
+        username = form.data.get('username')
+        
+        if User.objects.filter(username=username).exists():
+            e = u'Username "%s" is already in use.' % username
+            return render(request, self.template_name, {"form": self.form, "error": e, "header": "Signup" })
+
+        elif form.data['password1'] != form.data['password2']:
+            e = "The provided passwords did not match."
+            return render(request, self.template_name, {"form": self.form, "error": e, "header": "Signup" })
+        
+        elif form.is_valid():
             data = form.cleaned_data
             user = User.objects.create_user(
             username=data.get('username'),
@@ -24,14 +34,26 @@ class CreateUserView(View):
             )
             return redirect(reverse('login'))
 
-        return render(request, self.template_name, { "form": self.form })
+        e = "Something went wrong with your password. Check the instructions above and try again."
+        return render(request, self.template_name, { "form": self.form, "error": e, "header": "Signup" })
+
 
 class LoginView(View):
+    template_name = 'login.html'
+    form = LoginForm()
+    
+    def get(self,request):
+        return render(request, self.template_name, {"form": self.form, "header": "Login"})
 
-  def post(self,request):
-    if request.method == "POST":
+    def post(self, request):
         form = LoginForm(request.POST)
-        if form.is_valid():
+        username = form.data.get('username')
+        
+        if not User.objects.filter(username=username).exists():
+                e = u'Username "%s" does not exist.' % username
+                return render(request, self.template_name, {"form": self.form, "error": e, "header": "Login"})
+        
+        elif form.is_valid():
             data = form.cleaned_data
             user = authenticate(
                 request, 
@@ -41,17 +63,12 @@ class LoginView(View):
             if user:
                 login(request, user)
                 return redirect(reverse("homepage"))
-    form = LoginForm()
-    return render(request, "login.html", {"form": form})      
+        
+        e = "That username and password did not match."
+        return render(request, self.template_name, { "form": self.form, "error": e, "header": "Login" })      
     
-  def get(self,request):
-    template_name = 'login.html'
-    form = LoginForm()
-    return render(request, template_name, {"form": form, "header": "Login"})
-
 
 @login_required
 def logout_view(request):
     logout(request)
-
     return redirect(reverse("login"))

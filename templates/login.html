@@ -1,6 +1,7 @@
 {% extends 'homepage.html' %}
 {% block title %}Login{% endblock %}
 {% block content %}
+
 <div id="login">
 	<h1>Login</h1>
 	<form action="" method="post">
@@ -8,5 +9,8 @@
 		<input type="submit" value="Login" />
 	</form>
 	<a href="/signup"><button>Sign up</button></a>
+    {% if error %}
+      <div class="error">{{error}}</div>
+    {% endif %}
 </div>
 {% endblock content %}
