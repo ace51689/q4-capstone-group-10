@@ -8,7 +8,6 @@ from posts.models import Post
 from spotify.views import get_recently_played
 from users.models import User
 
-
 @login_required
 def homepage(request):
     popular_subreddits = Subreddit.objects.annotate(total_members=Count('members')).order_by('-total_members')
