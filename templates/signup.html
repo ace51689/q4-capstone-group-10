@@ -1,4 +1,6 @@
-{% include "navbar.html" %} 
+{% extends "homepage.html" %}
+{% block title %}Sign up{% endblock %}
+{% block content %}
 <head>
   <style>
     .error {
@@ -6,15 +8,14 @@
     }
   </style>
 </head>
-<body>
-  {% if header %}
-    <h1>{{header}}</h1>
-    {% endif %}
+<div id="signup">
+  <h1>Sign up</h1>
   <form action="" method="post">
     {% csrf_token %} {{ form.as_p }}
-      <input type="submit" value="Submit" />
+    <input type="submit" value="Sign Up" />
   </form>
-  {% if error %}
+ {% if error %}
     <div class="error">{{error}}</div>
   {% endif %}
-</body>
+</div>
+{% endblock content %}

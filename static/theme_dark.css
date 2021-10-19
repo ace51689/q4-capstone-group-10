@@ -1,0 +1,9 @@
+.theme-vars {
+	--accent-color: white;
+	--primary-color: black;
+	--background-color: black;
+}
+
+body, a {
+	color: white;
+}

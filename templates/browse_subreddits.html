@@ -1,5 +1,9 @@
-{% include "navbar.html" %}
-{% for subreddit in subreddits %}
-  <h2><a href="/subreddit/{{subreddit.id}}/">r/{{subreddit.name}}</a></h2>
-  <p>Number of members: {{subreddit.members.count}} Number of posts: {{subreddit.posts.count}}</p>
-{% endfor %}
+{% extends "homepage.html" %}
+{% block title %}Subreddits{% endblock %}
+{% block content %}
+<div id="subreddit-list">
+	{% for subreddit in subreddits %}
+	{% include 'subreddit_list_template.html' %}
+	{% endfor %}
+</div>
+{% endblock content %}

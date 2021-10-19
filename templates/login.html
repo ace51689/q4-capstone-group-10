@@ -1,28 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+{% extends 'homepage.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+    <head>
     <style>
       .error {
         color: red
       }
     </style>
-    <title>Login</title>
-  </head>
-  <body>
-    {% include "navbar.html" %} 
-    {% if header %}
-    <h1>{{header}}</h1>
-    {% endif %}
-
-    <form action="" method="post">
-      {% csrf_token %} {{ form.as_p }}
-      <input type="submit" value="Submit" />
-    </form>
+    </head>
+<div id="login">
+	<h1>Login</h1>
+	<form action="" method="post">
+		{% csrf_token %} {{ form.as_p }}
+		<input type="submit" value="Login" />
+	</form>
+	<a href="/signup"><button>Sign up</button></a>
     {% if error %}
       <div class="error">{{error}}</div>
     {% endif %}
-  </body>
-</html>
+</div>
+{% endblock content %}
