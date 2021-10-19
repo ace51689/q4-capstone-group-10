@@ -1,13 +1,15 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from django.db.models import Count
 
 from subreddits.models import Subreddit
 from posts.models import Post
 
 @login_required
 def homepage(request):
-    context = {'posts': Post.objects.filter(is_comment=False)}
+    popular_subreddits = Subreddit.objects.annotate(total_members=Count('members')).order_by('-total_members')
+    context = {'posts': Post.objects.filter(is_comment=False), 'popular_subreddits': popular_subreddits}
     return render(request, 'homepage.html', context)
 
 

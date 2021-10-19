@@ -15,7 +15,7 @@
 			><i data-feather="arrow-up"></i></a>
 			<span>{{comment.up_votes.count|sub:comment.down_votes.count}}</span>
 			<a href="/post/{{comment.id}}/downvote"
-			{% if request.user in comment.up_votes.all %}
+			{% if request.user in comment.down_votes.all %}
 			class="active-button"
 			{% endif %}
 			><i data-feather="arrow-down"></i></a>

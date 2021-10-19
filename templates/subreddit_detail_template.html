@@ -2,7 +2,7 @@
 	<h1>r/{{subreddit.name}}</h1>
 	<hr>
 	<ul>
-		<li>{{subreddit.members|length}} Members</li>
+		<li>{{subreddit.members.all|length}} Members</li>
 		<li>Number of Posts: {{posts|length}}</li>
 		<li>Admin: <a href="/profile/{{subreddit.admin.id}}/">{{subreddit.admin}}</a></li>
 		{% if request.user == subreddit.admin %}

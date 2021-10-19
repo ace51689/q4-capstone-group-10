@@ -76,13 +76,41 @@ a {
 }
 
 #popular-subreddits {
-	flex-grow: 1;
+	width: 332.5px;
 }
 
-#login {
+#popular-subreddits > .subreddit {
+	justify-content: center;
+}
+
+#popular-subreddits p {
+	display: none;
+}
+
+#music-list > h2,
+#popular-subreddits > h2 {
+	margin: 15px 10px;
+}
+
+#login, #signup {
 	margin: auto;
-    width: fit-content;
-    padding: 10px 20px;
+	display: flex;
+	overflow: hidden;
+	text-align: center;
+	flex-direction: column;
+}
+
+#login > a,
+#signup > a {
+	margin: 10px 20px;
+}
+
+#signup .helptext {
+	display: block;
+}
+
+#signup ul {
+	list-style: none;
 }
 
 #player {
@@ -146,6 +174,11 @@ a {
 	font-size: x-large;
 }
 
+.post-voting-buttons > .active-button,
+.comment-voting-buttons > .active-button {
+	background-color: var(--accent-color);
+}
+
 .post-voting-buttons > a,
 .comment-voting-buttons > a {
 	border-radius: 5px;
@@ -159,7 +192,6 @@ a {
 .post-header{
     display: flex;
     justify-content: space-between;
-    padding: 10px;
 }
 
 .post-header, .post-options {
@@ -214,4 +246,14 @@ a {
 
 #subreddit-info ul > li {
 	margin: 5px 0;
+}
+
+.subreddit {
+	display: flex;
+    margin: 10px 50px;
+    padding: 10px 20px;
+	align-items: center;
+    border-radius: 10px;
+    justify-content: space-between;
+    background: var(--content-background);
 }
