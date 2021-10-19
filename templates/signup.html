@@ -8,6 +8,7 @@
     {% csrf_token %} {{ form.as_p }}
     <input type="submit" value="Sign Up" />
   </form>
+  <a href="/login"><button>Login</button></a>
  {% if error %}
     <div class="error">{{error}}</div>
   {% endif %}
