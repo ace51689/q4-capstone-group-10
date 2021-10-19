@@ -1,4 +1,5 @@
 {% load static %}
+{% static '' as static_root_dir %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{% block title %}Home{% endblock %}</title>
 	<link rel="stylesheet" href="{% static 'style.css' %}">
-	<link rel="stylesheet" href="{% static 'theme_three.css' %}">
+	<link rel="stylesheet" href="{{static_root_dir}}{{request.user.theme_choice}}">
     <script src="{% static 'script.js' %}" defer></script>
 	<script src="https://unpkg.com/feather-icons"></script>
 	<script>
@@ -64,7 +65,9 @@
 		{% endblock content %}
 		<hr>
         <div id="player">
-			<iframe src="https://open.spotify.com/embed/track/04U72dJzpaGsMl4edd1ZyX" width="100%" height="100%" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; transparency;"></iframe>
+		{% if request.user.last_played_song %}
+			<iframe src="{{request.user.last_played_song}}" width="100%" height="100%" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; transparency;"></iframe>
+		{% endif %}
 		</div>
 	</main>
 </body>

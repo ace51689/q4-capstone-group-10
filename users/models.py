@@ -10,3 +10,14 @@ class User(AbstractUser):
 	access_token = models.TextField()
 	refresh_token = models.TextField()
 	is_premium = models.BooleanField(default=False)
+	last_played_song = models.URLField(null=True, blank=True)
+	theme_choice = models.CharField(
+		max_length=15, default='theme_three.css',
+		choices=[
+			('theme_one.css', 'One'),
+			('theme_two.css', 'Two'),
+			('theme_three.css', 'Three'),
+			('theme_four.css', 'Four'),
+			('theme_light.css', 'Light'),
+			('theme_dark.css', 'Dark'),
+		])

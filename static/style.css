@@ -23,7 +23,7 @@ main {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	height: calc(100% - 74px);
+	height: calc(100% - 72px);
 }
 
 main > div:first-child {
@@ -91,7 +91,7 @@ a {
 
 .song .song-item {
 	display: flex;
-	max-width: 261.5px;
+	max-width: 251.5px;
 	align-items: center;
 }
 
@@ -199,11 +199,6 @@ a {
 	padding: 5px;
 }
 
-.post-voting-buttons > .active-button,
-.comment-voting-buttons > .active-button {
-	background-color: var(--accent-color);
-}
-
 .post-voting-buttons {
 	display: flex;
     align-items: center;
@@ -221,12 +216,15 @@ a {
 }
 
 .post-voting-buttons > .active-button,
-.comment-voting-buttons > .active-button {
+.comment-voting-buttons > .active-button,
+.song-options > .active-button {
 	background-color: var(--accent-color);
 }
 
 .post-voting-buttons > a,
-.comment-voting-buttons > a {
+.comment-voting-buttons > a,
+.song-options > a {
+	padding: 5px;
 	border-radius: 5px;
 	transform: scale(.8);
 }
