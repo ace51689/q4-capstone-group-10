@@ -30,7 +30,7 @@ main > div:first-child {
 	border-right: 2px solid rgb(238, 238, 238);
 	border-left: 2px solid rgb(238, 238, 238);
 	background-color: var(--primary-color);
-	height: calc(100% - 107px);
+	height: calc(100% - 80px);
 	border-right-style: groove;
 	border-left-style: groove;
 	margin: 0 auto;
@@ -68,18 +68,64 @@ a {
 }
 
 #home > #content {
+	width: 19.8%;
 	flex-grow: 2;
 }
 
 #music-list {
-	flex-grow: 0.7;
+	width: 332.5px;
+	overflow-y: scroll;
+}
+
+.song {
+	margin: 5px;
+	height: 66px;
+	display: flex;
+	overflow: hidden;
+	padding: 5px 10px;
+	align-items: center;
+	border-radius: 10px;
+	justify-content: space-between;
+	background-color: var(--content-background);
+}
+
+.song .song-item {
+	display: flex;
+	max-width: 261.5px;
+	align-items: center;
+}
+
+.song .song-info {
+	margin: 0px 8px;
+	overflow: hidden;
+}
+
+.song .song-options {
+	display: flex;
+	flex-direction: column;
+}
+
+.song .name {
+	overflow: hidden;
+	margin-bottom: 5px;
+	white-space: nowrap;
+	font-weight: bolder;
+    text-overflow: ellipsis;
+}
+
+.song .artists {
+	margin-top: 0;
+	font-size: small;
+	margin-left: 5px;
 }
 
 #popular-subreddits {
-	width: 332.5px;
+	width: 233.5px;
 }
 
 #popular-subreddits > .subreddit {
+	padding: 0;
+	margin: 10px 20px;
 	justify-content: center;
 }
 

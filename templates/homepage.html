@@ -12,10 +12,7 @@
 	<script src="https://unpkg.com/feather-icons"></script>
 	<script>
 		let access_token = '{{request.user.access_token}}';
-		let is_premium = '{{is_premium}}';
 	</script>
-	<script src="{% static 'spotify-player.js' %}" defer></script>
-	<script src="https://sdk.scdn.co/spotify-player.js"></script>
 </head>
 <body class="theme-vars">
 	<header>
@@ -42,7 +39,14 @@
 				<a href="/admin"><button>Admin</button></a>
 				<a href="/create_post"><button>Create a Post</button></a>
 			</nav>
-			<div id="music-list"></div>
+			<div id="music-list">
+				<h2>Recently Played</h2>
+				<hr>
+				{% for item in recently_played.items %}
+				{% include 'song_template.html' with song=item.track %}
+				{% endfor %}
+			</div>
+			<hr>
             <div id="content">
 				{% for post in posts %}
 				{% include 'post_template.html' %}
@@ -60,7 +64,7 @@
 		{% endblock content %}
 		<hr>
         <div id="player">
-			{% include 'player-template.html' %}
+			<iframe src="https://open.spotify.com/embed/track/04U72dJzpaGsMl4edd1ZyX" width="100%" height="100%" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; transparency;"></iframe>
 		</div>
 	</main>
 </body>

@@ -5,11 +5,14 @@ from django.db.models import Count
 
 from subreddits.models import Subreddit
 from posts.models import Post
+from spotify.views import get_recently_played
 
 @login_required
 def homepage(request):
     popular_subreddits = Subreddit.objects.annotate(total_members=Count('members')).order_by('-total_members')
-    context = {'posts': Post.objects.filter(is_comment=False), 'popular_subreddits': popular_subreddits}
+    posts = Post.objects.filter(is_comment=False)
+    recently_played = get_recently_played(request.user.access_token)
+    context = {'posts': posts, 'recently_played': recently_played, 'popular_subreddits': popular_subreddits}
     return render(request, 'homepage.html', context)
 
 

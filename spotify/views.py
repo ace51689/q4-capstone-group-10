@@ -77,3 +77,7 @@ def refresh_token(request):
 	else:
 		return JsonResponse(token_response.json(), status=token_response.status_code)
 
+
+def get_recently_played(access_token):
+	data = requests.get(f'https://api.spotify.com/v1/me/player/recently-played/?access_token={access_token}')
+	return data.json()
