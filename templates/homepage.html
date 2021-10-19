@@ -1,5 +1,4 @@
 {% load static %}
-{% load mptt_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +6,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{% block title %}Home{% endblock %}</title>
-	<link rel="stylesheet" href="{% static 'themes.css' %}">
 	<link rel="stylesheet" href="{% static 'style.css' %}">
+	<link rel="stylesheet" href="{% static 'theme_three.css' %}">
     <script src="{% static 'script.js' %}" defer></script>
 	<script src="https://unpkg.com/feather-icons"></script>
 	<script>
@@ -18,12 +17,15 @@
 	<script src="{% static 'spotify-player.js' %}" defer></script>
 	<script src="https://sdk.scdn.co/spotify-player.js"></script>
 </head>
-<body>
+<body class="theme-vars">
 	<header>
 		<a href="/" id="text-logo"><h1>LOGO</h1></a>
         <h2 id="page-title"></h2>
 		<div>
 			{% if request.user.is_authenticated %}
+			{% if request.user.is_staff and request.user.is_superuser %}
+			<a href="/admin/"><button>Admin</button></a>
+			{% endif %}
 			<a href="/subreddit/browse/"><button>Browse Subreddits</button></a>
 			<a href="/profile/{{request.user.id}}"><button>Profile</button></a>
 			<a href="/logout"><button>Logout</button></a>
@@ -46,7 +48,14 @@
 				{% include 'post_template.html' %}
 				{% endfor %}
 			</div>
-            <div id="popular-subreddits"></div>
+			<hr>
+            <div id="popular-subreddits">
+				<h2>Popular Subreddits</h2>
+				<hr>
+				{% for subreddit in popular_subreddits %}
+				{% include 'subreddit_list_template.html' %}
+				{% endfor %}
+			</div>
 		</div>
 		{% endblock content %}
 		<hr>
