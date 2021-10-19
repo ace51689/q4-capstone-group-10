@@ -10,6 +10,9 @@ from posts.models import Post
 
 # Create your views here.
 def subreddit_view(request, id):
+  if not Subreddit.objects.filter(id=id).exists():
+    return render(request, '404.html', { "type": "Subreddit", "error": f"There is no subreddit with id #{id}." })
+  
   subreddit = Subreddit.objects.get(id=id)
   posts = Post.objects.filter(subreddit=id, is_comment=False).order_by('-pk')
   members = subreddit.members.all()
@@ -46,6 +49,9 @@ class CreateSubredditView(LoginRequiredMixin, View):
 
 @login_required
 def add_moderator_view(request, id):
+  if not Subreddit.objects.filter(id=id).exists():
+    return render(request, '404.html', { "type": "Subreddit", "error": f"There is no subreddit with id #{id}." })
+  
   subreddit = Subreddit.objects.get(id=id)
 
   if request.method == "POST":
@@ -53,7 +59,7 @@ def add_moderator_view(request, id):
     
     if not form.data.get('moderators', False):
       e = 'No moderator selected'
-      return render(request, 'signup.html', {"form": AddModeratorForm(subreddit), "error": e })
+      return render(request, "add_moderator.html", {"form": AddModeratorForm(subreddit), "add_mod": "Add Moderator",  "error": e })
     
     elif form.is_valid():
       data = form.cleaned_data
@@ -63,11 +69,14 @@ def add_moderator_view(request, id):
 
   form = AddModeratorForm(subreddit)
 
-  return render(request, "signup.html", { "form": form })
+  return render(request, "add_moderator.html", { "form": form, "add_mod": "Add Moderator" })
 
 
 @login_required
 def remove_moderator_view(request, id):
+  if not Subreddit.objects.filter(id=id).exists():
+    return render(request, '404.html', { "type": "Subreddit", "error": f"There is no subreddit with id #{id}." })
+  
   subreddit = Subreddit.objects.get(id=id)
 
   if request.method == "POST":
@@ -75,7 +84,7 @@ def remove_moderator_view(request, id):
 
     if not form.data.get('moderators', False):
       e = 'No moderator selected'
-      return render(request, 'signup.html', {"form": RemoveModChangeAdminForm(subreddit), "error": e })
+      return render(request, "remove_moderator.html", {"form": RemoveModChangeAdminForm(subreddit), "error": e })
 
     if form.is_valid():
       data = form.cleaned_data
@@ -85,11 +94,14 @@ def remove_moderator_view(request, id):
 
   form = RemoveModChangeAdminForm(subreddit)
 
-  return render(request, "signup.html", { "form": form })
+  return render(request, "remove_moderator.html", { "form": form })
 
 
 @login_required
 def change_admin_view(request, id):
+  if not Subreddit.objects.filter(id=id).exists():
+    return render(request, '404.html', { "type": "Subreddit", "error": f"There is no subreddit with id #{id}." })
+  
   subreddit = Subreddit.objects.get(id=id)
 
   if request.method == "POST":
@@ -97,7 +109,7 @@ def change_admin_view(request, id):
 
     if not form.data.get('moderators', False):
       e = 'No new admin selected.'
-      return render(request, 'signup.html', { "form": RemoveModChangeAdminForm(subreddit), "error": e })
+      return render(request, "change_admin.html", { "form": RemoveModChangeAdminForm(subreddit), "error": e })
 
     if form.is_valid():
       data = form.cleaned_data
@@ -109,11 +121,14 @@ def change_admin_view(request, id):
 
   form = RemoveModChangeAdminForm(subreddit)
 
-  return render(request, "signup.html", { "form": form })
+  return render(request, "change_admin.html", { "form": form })
 
 
 @login_required
 def join_subreddit(request, id):
+  if not Subreddit.objects.filter(id=id).exists():
+    return render(request, '404.html', { "type": "Subreddit", "error": f"There is no subreddit with id #{id}." })
+  
   subreddit_to_join = Subreddit.objects.get(id=id)
   subreddit_to_join.members.add(request.user)
   request.user.subreddits.add(subreddit_to_join)
@@ -122,6 +137,9 @@ def join_subreddit(request, id):
 
 @login_required
 def leave_subreddit(request, id):
+  if not Subreddit.objects.filter(id=id).exists():
+    return render(request, '404.html', { "type": "Subreddit", "error": f"There is no subreddit with id #{id}." })
+  
   subreddit_to_leave = Subreddit.objects.get(id=id)
   subreddit_to_leave.members.remove(request.user)
   request.user.subreddits.remove(subreddit_to_leave)
@@ -130,6 +148,9 @@ def leave_subreddit(request, id):
 
 @login_required
 def delete_subreddit_view(request, id):
+  if not Subreddit.objects.filter(id=id).exists():
+    return render(request, '404.html', { "type": "Subreddit", "error": f"There is no subreddit with id #{id}." })
+  
   subreddit_to_delete = Subreddit.objects.get(id=id)
   
   if request.method == "POST":

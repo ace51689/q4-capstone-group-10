@@ -1,3 +1,4 @@
+{% load mathfilters%}
 <div id="subreddit-info">
 	<h1>r/{{subreddit.name}}</h1>
 	<hr>
@@ -5,23 +6,26 @@
 
 		<li>{{subreddit.members.all|length}} Members</li>
 
-		<li>Number of Posts: {{posts|length}}</li>
+		<li>Number of Posts: {{subreddit.posts.count}}</li>
 		<li>Admin: <a href="/profile/{{subreddit.admin.id}}/">u/{{subreddit.admin}}</a></li>
 		
 		{% if request.user == subreddit.admin and subreddit.members.count <= 1 %}
+			<li><a href="/subreddit/{{subreddit.id}}/create-post/"><button>Create Post</button></a></li>
 			<li><a href="/subreddit/{{subreddit.id}}/add-moderator/"><button disabled>Add Moderator</button></a></li>
 			<li><a href="/subreddit/{{subreddit.id}}/remove-moderator/"><button disabled>Remove Moderator</button></a></li>
 			<li><a href="/subreddit/{{subreddit.id}}/change-admin/"><button disabled>Assign New Admin</button></a></li>
 			<li><a href="/subreddit/{{subreddit.id}}/delete/"><button>Delete Subreddit</button></a></li>
 		
 		{% elif request.user == subreddit.admin and subreddit.moderators.count == 0 %}
+			<li><a href="/subreddit/{{subreddit.id}}/create-post/"><button>Create Post</button></a></li>
 			<li><a href="/subreddit/{{subreddit.id}}/add-moderator/"><button>Add Moderator</button></a></li>
 			<li><a href="/subreddit/{{subreddit.id}}/remove-moderator/"><button disabled>Remove Moderator</button></a></li>
 			<li><a href="/subreddit/{{subreddit.id}}/change-admin/"><button disabled>Assign New Admin</button></a></li>
 			<li><a href="/subreddit/{{subreddit.id}}/delete/"><button>Delete Subreddit</button></a></li>
 		
-		{% elif request.user == subreddit.admin %}
-			<li><a href="/subreddit/{{subreddit.id}}/add-moderator/"><button>Add Moderator</button></a></li>
+		{% elif request.user == subreddit.admin and subreddit.members.count|sub:1 == subreddit.moderators.count %}
+			<li><a href="/subreddit/{{subreddit.id}}/create-post/"><button>Create Post</button></a></li>
+			<li><a href="/subreddit/{{subreddit.id}}/add-moderator/"><button disabled>Add Moderator</button></a></li>
 			<li><a href="/subreddit/{{subreddit.id}}/remove-moderator/"><button>Remove Moderator</button></a></li>
 			<li><a href="/subreddit/{{subreddit.id}}/change-admin/"><button>Assign New Admin</button></a></li>
 			<li><a href="/subreddit/{{subreddit.id}}/delete/"><button>Delete Subreddit</button></a></li>

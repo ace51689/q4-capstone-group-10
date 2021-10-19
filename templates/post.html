@@ -6,6 +6,9 @@
 <div id="post-container">
   <div id="post-content">
     {% include 'post_template.html' %}
+    {% if error %}
+      <div class="error">{{error}}</div>
+    {% endif %}
     <hr>
     <div id="comments">
       <h2>Comments</h2>

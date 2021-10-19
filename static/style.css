@@ -257,3 +257,11 @@ a {
     justify-content: space-between;
     background: var(--content-background);
 }
+
+.error {
+	color: red
+}
+
+#comment-box {
+	width: 80%
+}
