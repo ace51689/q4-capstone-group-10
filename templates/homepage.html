@@ -42,7 +42,7 @@
 				<a href="/create_post"><button>Create a Post</button></a>
 			</nav>
 			<div id="music-list">
-				<h2>Recently Played</h2>
+				<h2>Recently Played<a href="/song/search" style="margin-left: 120px;"><i data-feather="search"></i></a></h2>
 				<hr>
 				{% for item in recently_played.items %}
 				{% include 'song_template.html' with song=item.track %}

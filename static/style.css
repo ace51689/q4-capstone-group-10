@@ -62,6 +62,7 @@ a {
 #subreddit,
 #user-profile,
 #post-container,
+#query-search-bar,
 .comment-options {
 	display: flex;
 }
@@ -215,18 +216,29 @@ a {
 	font-size: x-large;
 }
 
+.active-button,
 .post-voting-buttons > .active-button,
 .comment-voting-buttons > .active-button,
 .song-options > .active-button {
 	background-color: var(--accent-color);
 }
 
+.active-button,
 .post-voting-buttons > a,
 .comment-voting-buttons > a,
 .song-options > a {
 	padding: 5px;
 	border-radius: 5px;
 	transform: scale(.8);
+}
+
+#query-search-bar {
+	width: 60%;
+	margin: auto;
+}
+
+#query-search-bar > input {
+	flex-grow: 1;
 }
 
 .post-content {
@@ -300,6 +312,10 @@ a {
     border-radius: 10px;
     justify-content: space-between;
     background: var(--content-background);
+}
+
+#search {
+	overflow-y: scroll;
 }
 
 ::-webkit-scrollbar {

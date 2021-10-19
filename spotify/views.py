@@ -93,3 +93,11 @@ def share_song(request, uri):
 	subreddits = request.user.subreddits.all()
 	context = {'subreddits': subreddits, 'uri': uri}
 	return render(request, 'browse_subreddits.html', context)
+
+
+def search_song(request):
+	query = request.GET.get('query')
+	results = {'tracks': {'items': []}}
+	if query:
+		results = requests.get(f'https://api.spotify.com/v1/search/?q={query}&type=track&access_token={request.user.access_token}').json()
+	return render(request, 'song_search.html', {'results': results['tracks']['items']})
