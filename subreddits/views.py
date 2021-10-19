@@ -42,6 +42,7 @@ class CreateSubredditView(LoginRequiredMixin, View):
       )
       subreddit.save()
       subreddit.members.add(request.user)
+      request.user.subreddits.add(subreddit)
       return HttpResponseRedirect(reverse('subreddit', args=(subreddit.id,)))
       
     return render(request, self.template_name, { 'form': self.form })
