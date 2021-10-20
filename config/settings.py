@@ -28,9 +28,9 @@ Env.read_env()
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 # todo: When done set above line to `False` then the line bellow should be `ALLOWED_HOSTS = ['*']`
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
