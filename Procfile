@@ -1,1 +1,1 @@
-web: gunicorn q4-capstone-group-10.config.wsgi
+web: gunicorn config.wsgi
