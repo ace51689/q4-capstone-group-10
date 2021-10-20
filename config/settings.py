@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = Env()
 Env.read_env()
 
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY', default='temp')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

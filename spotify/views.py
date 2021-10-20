@@ -12,7 +12,7 @@ env = Env()
 Env.read_env()
 redirect_url = None
 page_redirect = None
-state_key = env('STATE_KEY')
+state_key = env('STATE_KEY', default='')
 
 
 def generate_id(length):
