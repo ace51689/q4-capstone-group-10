@@ -88,11 +88,23 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
+DB_LIST = {
+    'sqlite3': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'staticfiles' / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'mongodb': {
+        'ENGINE': 'djongo',
+        'NAME': 'reddify',
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': env('MONGODB_SRV')
+        }
     }
+}
+
+DATABASES = {
+    'default': DB_LIST[env('DB_CHOICE')]
 }
 
 
