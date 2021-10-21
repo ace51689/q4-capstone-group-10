@@ -93,13 +93,13 @@ DB_LIST = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     },
-    'mongodb': {
-        'ENGINE': 'djongo',
+    'mysql': {
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'reddify',
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': env('MONGODB_SRV')
-        }
+        'USER': env('MYSQL_USERNAME'),
+        'PASSWORD': env('MYSQL_PASSWORD'),
+        'HOST': env('MYSQL_HOST'),
+        'POST': env('MYSQL_PORT'),
     }
 }
 
