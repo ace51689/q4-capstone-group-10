@@ -7,3 +7,7 @@
 body, a {
 	color: white;
 }
+
+.active-button > svg {
+	color: black;
+}
