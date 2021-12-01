@@ -100,6 +100,14 @@ DB_LIST = {
         'PASSWORD': env('MYSQL_PASSWORD'),
         'HOST': env('MYSQL_HOST'),
         'POST': env('MYSQL_PORT'),
+    },
+    'postgresql': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('POSTGRESQL_DBNAME'),
+        'USER': env('POSTGRESQL_USERNAME'),
+        'PASSWORD': env('POSTGRESQL_PASSWORD'),
+        'HOST': env('POSTGRESQL_HOST'),
+        'POST': env('POSTGRESQL_PORT'),
     }
 }
 
