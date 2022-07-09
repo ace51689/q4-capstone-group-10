@@ -75,7 +75,13 @@ def refresh_token(request):
 		request.user.save()
 		return redirect('/')
 	else:
-		return JsonResponse(token_response.json(), status=token_response.status_code)
+		if token_response.json()['error_description'] == 'Refresh token revoked':
+			request.user.access_token = None
+			request.user.refresh_token = None
+			request.user.save()
+			return redirect('/')
+		else:
+			return JsonResponse(token_response.json(), status=token_response.status_code)
 
 
 def get_recently_played(access_token):
