@@ -184,6 +184,6 @@ def delete_subreddit_view(request, id):
 
 def browse_subreddits_view(request):
   context = { 'subreddits': Subreddit.objects.annotate(
-              post_count=Count('posts')).order_by('-post_count') }
+              member_count=Count('members')).order_by('-member_count') }
   
   return render(request, 'browse_subreddits.html', context)

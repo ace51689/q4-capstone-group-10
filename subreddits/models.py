@@ -8,7 +8,6 @@ class Subreddit(models.Model):
 	admin = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='admin')
 	members = models.ManyToManyField('users.User', symmetrical=False, blank=True, related_name='members')
 	moderators = models.ManyToManyField('users.User', symmetrical=False, blank=True, related_name='moderators')
-	posts = models.ManyToManyField('posts.Post', symmetrical=False, blank=True, related_name='subreddit_posts')
 
 	def __str__(self):
 		return self.name

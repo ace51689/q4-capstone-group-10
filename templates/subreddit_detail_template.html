@@ -6,7 +6,7 @@
 
 		<li>{{subreddit.members.all|length}} Members</li>
 
-		<li>Number of Posts: {{subreddit.posts.count}}</li>
+		<li>Number of Posts: {{posts.count}}</li>
 		<li>Admin: <a href="/profile/{{subreddit.admin.id}}/">u/{{subreddit.admin}}</a></li>
 		
 		{% if request.user == subreddit.admin and subreddit.members.count <= 1 %}

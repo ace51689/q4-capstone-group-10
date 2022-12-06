@@ -92,22 +92,6 @@ DB_LIST = {
     'sqlite3': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    },
-    'mysql': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'reddify',
-        'USER': env('MYSQL_USERNAME'),
-        'PASSWORD': env('MYSQL_PASSWORD'),
-        'HOST': env('MYSQL_HOST'),
-        'POST': env('MYSQL_PORT'),
-    },
-    'postgresql': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('POSTGRESQL_DBNAME'),
-        'USER': env('POSTGRESQL_USERNAME'),
-        'PASSWORD': env('POSTGRESQL_PASSWORD'),
-        'HOST': env('POSTGRESQL_HOST'),
-        'POST': env('POSTGRESQL_PORT'),
     }
 }
 

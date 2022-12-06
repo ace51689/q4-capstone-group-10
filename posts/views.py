@@ -36,7 +36,6 @@ def create_post_view(request, id):
         subreddit = subreddit,
       )
       post.save()
-      subreddit.posts.add(post)
       return HttpResponseRedirect(reverse('post', args=(post.id,)))
 
   form = CreatePostForm()
