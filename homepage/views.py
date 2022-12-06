@@ -14,7 +14,7 @@ from users.forms import UserSettingsForm
 @login_required
 def homepage(request):
     popular_subreddits = Subreddit.objects.annotate(total_members=Count('members')).order_by('-total_members')
-    posts = Post.objects.filter(is_comment=False)
+    posts = Post.objects.filter(is_comment=False).order_by('-created_at')
     recently_played = get_recently_played(request.user.access_token)
     if 'error' in recently_played:
         if recently_played['error']['message'] == 'The access token expired':
